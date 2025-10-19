@@ -126,8 +126,7 @@ public abstract class Personagem {
     }
 
     // Cada subclasse implementa seu clone usando o construtor de cópia acima,
-    // o supoer(modelo) para cada clone chama dessa classe.
+    // o super(modelo) para cada clone chama dessa classe.
     @Override
     public abstract Object clone();
-}
 }
