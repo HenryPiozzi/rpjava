@@ -1,8 +1,8 @@
 public abstract class Personagem {
 
-    private String nome;
-    private byte pontosVida, ataque, defesa, nivel;
-    private Inventario inventario;
+    protected String nome;
+    protected byte pontosVida, ataque, defesa, nivel;
+    protected Inventario inventario;
 
     public Personagem (String nome, byte pontosVida, byte ataque, byte defesa, byte nivel, Inventario inventario) {
         this.nome = nome;
