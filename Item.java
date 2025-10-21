@@ -22,7 +22,7 @@ Item[] itemLendario = {
     new Item("Capa da Invisibilidade", "Não recebe o proximo ataque", "Invisibilidade", (byte)1)
 };
 
-Class Item{
+public class Item{
     private String nome;
     private String descricao;
     private String efeito;
