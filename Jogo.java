@@ -59,7 +59,7 @@ public class Jogo{
 
     private void explorar() {
         // Exemplo 
-        Inimigo inimigo = new Inimigo("Goblin", 30, 5, 2, 1);
+        Inimigo inimigo = new Inimigo("Goblin", 15, 3, 2, 1);
         //dar um jeito de gerar um inimigo aleatorio baseado no capituloAtual
         System.out.println("Você encontrou um " + inimigo.getNome() + "!");
         jogador.batalhar(inimigo, dado);

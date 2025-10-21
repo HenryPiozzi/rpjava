@@ -22,7 +22,7 @@ public class Inventario {
     public boolean usarItem(String nome) {
         for (int idx = 0; idx < itens.size(); idx++) {
             Item i = itens.get(idx);
-            if (i.getNome().equals(nome)) {
+            if (i.getNome().equalsIgnoreCase(nome.trim())) {
                 if (i.getQuantidade() > 0) {
                     i.setQuantidade((byte) (i.getQuantidade() - 1));
                     System.out.println("Você usou: " + i.getNome() + " | Restante: " + i.getQuantidade());
