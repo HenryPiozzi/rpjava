@@ -1,4 +1,4 @@
-public class Arqueiro extends Personagem {
+public class Arqueiro extends Personagem  implements Clonobale {
 
     public Arqueiro(String nome) throws Exception {
         super(nome, (byte)20, (byte)5, (byte)5, (byte)1, new Inventario());

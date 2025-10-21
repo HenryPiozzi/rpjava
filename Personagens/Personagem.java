@@ -1,8 +1,12 @@
-public abstract class Personagem {
+import java.util.Scanner;
+import java.util.Random;
+
+public abstract class Personagem implements  Clonobale, {
 
     protected String nome;
     protected byte pontosVida, ataque, defesa, nivel;
     protected Inventario inventario;
+    Scanner scanner = new Scanner(System.in);
 
     public Personagem (String nome, byte pontosVida, byte ataque, byte defesa, byte nivel, Inventario inventario) {
         this.nome = nome;
@@ -72,11 +76,136 @@ public abstract class Personagem {
         return this.inventario;
     }
 
+    public void batalhar(Inimigo inimigo) {
+        Random random = new Random();
+
+        System.out.println("Batalha iniciada!");
+        System.out.println(this.nome " VS " inimigo.getNome());
+        System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+
+        while(this.pontosVida > 0 && inimigo.getPontosVida() > 0) {
+            System.out.println("O que deseja fazer?");
+            System.out.println("1) Atacar")
+            System.out.println("2) Usar Item");
+            System.out.println("3) Fugir");
+
+            System.out.print("Escolha: ");
+            byte escolha = scanner.nextByte();
+
+            switch(escolha) {
+                case 1 -> {
+
+                    //Joga o dado
+                    byte jogadorDado = (byte) (random.nextInt(6) + 1);
+                    byte inimigoDado = (byte) (random.nextInt(6) + 1);
+
+                    //Soma o dado com o ataque
+                    byte ataqueJogador = (byte) (this.ataque + jogadorDado);
+                    byte ataqueInimigo = (byte) (inimigo.getAtaque() + inimigoDado);
+
+                    System.out.println(this.nome + " rolou " + jogadorDado + " e ficou com " ataqueJogador " de ataque!");
+                    System.out.println(inimigo.getNome + " rolou " + inimigoDado + " e ficou com " ataqueInimigo " de ataque!");
+
+                    //Ataque do jogador
+                    if(ataqueJogador > inimigo.getDefesa()) {
+                        byte danoJogador = (byte) (ataqueJogador - inimigo.getDefesa());
+                        inimigo.setPontosVida((byte) (inimigo.getPontosVida() - danoJogador));
+
+                        System.out.println("Você causou" + danoJogador + " de dano!");
+                        System.out.println(inimigo.getNome() " está agora com " + inimigo.getPontosVida() " de vida!");
+                    } else {
+                        System.out.println(inimigo.getNome() + "defendeu seu ataque! Ataque menor que a defesa.");
+                    }
+
+                    // Ataque do inimigo
+                    if(ataqueInimigo > this.defesa) {
+                        byte danoInimigo = (byte) (ataqueInimigo - this.defesa);
+                        this.setPontosVida((byte) (this.pontosVida - danoInimigo));
+
+                        ystem.out.println("Inimigo causou " + danoInimigo + " de dano!");
+                        System.out.println(this.nome " está agora com " + this.pontosVida " de vida!");
+                    } else {
+                        System.out.println(this.nome + "defendeu o ataque! Ataque menor que a defesa.");
+                    }
+
+                    // Jogador é derrotado
+                    if (this.pontosVida <= 0) {
+                        System.out.println(this.nome " foi derrotado!");
+                        break;
+                    }
+
+                    // Inimigo é derrotado
+                    if (inimigo.getPontosVida() <= 0) {
+                        System.out.println("\n" + inimigo.getNome() + " foi derrotado!");
+                        System.out.println("\nVocê venceu a batalha!");
+
+                        uparNivel(nivel);
+                        // Colocar aqui o item aleatório
+
+                        break;
+                    }
+                }
+
+                case 2 -> {
+                    System.out.print("Inventário: ");
+                    this.getInventario().listarItens();
+
+                    System.out.print("\nDigite o nome do item: ");
+                    String nomeItem = scanner.nextLine();
+
+                    // Terminar lógica de usar
+                }
+
+                case 3 - > {
+                    System.out.println("\nVocê fugiu da batalha!");
+                    return;
+                }
+
+                default -> System.out.println("\nEscolha uma dessas opções!");
+            }
+        }
+    }
+
+    public void uparNivel(byte nivel) {
+
+        this.setNivel((byte) (this.nivel + 1));
+        System.out.println("Você subiu de nível! Agora você está no nível " + this.nivel);
+
+        System.outprintln("\nVocê ganhou um ponto de atríbuto.")
+        System.outprintln("O que deseja upar?")
+        System.out.println("1) Vida")
+        System.out.println("2) Ataque");
+        System.out.println("3) Defesa");
+
+        System.out.print("Escolha: ");
+        byte escolha = scanner.nextByte();
+
+        switch (escolha) {
+            case 1 -> {
+                this.setPontosVida(this.vida + 1);
+                System.out.println("Vida upada!");
+
+            }
+            case 2 -> {
+                this.setAtaque(this.ataque + 1);
+                System.out.println("Ataque upado!");
+            }
+            case 3 -> {
+                this.setDefesa(this.defesa + 1);
+                System.out.println("Defesa upada!");
+            }
+
+            return;
+
+            default -> System.out.println("\nEscolha uma dessas opções!");
+        }
+    }
+
     @Override
     public String toString() {
         return this.nome + " (Nível " + this.nivel + ") - Vida: " + this.pontosVida +
                 ", Ataque: " + this.ataque + ", Defesa: " + this.defesa +
-                ", Inventário: " + this.inventario.toString();
+                ", Inventário: " + this.inventario.listarItens();
     }
 
     @Override
