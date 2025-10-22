@@ -1,4 +1,4 @@
-public class Inimigo extends Personagem {
+public class Inimigo extends Personagem implements  Cloneable {
 
     public Inimigo(String nome, byte pontosVida, byte ataque, byte defesa, byte nivel, Inventario inventario) throws Exception {
         super(nome, pontosVida, ataque, defesa, nivel, inventario);

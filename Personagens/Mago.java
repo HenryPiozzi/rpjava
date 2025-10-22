@@ -1,4 +1,4 @@
-public class Mago extends Personagem implements Clonobale {
+public class Mago extends Personagem implements Cloneable {
 
     public Mago(String nome) throws Exception {
         super(nome, (byte)20, (byte)5, (byte)5, (byte)1, new Inventario());

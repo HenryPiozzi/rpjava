@@ -1,4 +1,4 @@
-public class Guerreiro extends Personagem  implements  Clonobale {
+public class Guerreiro extends Personagem  implements  Cloneable {
 
     public Guerreiro(String nome) throws Exception {
         super(nome, (byte)20, (byte)5, (byte)5, (byte)1, new Inventario());

@@ -1,7 +1,7 @@
 import java.util.Scanner;
 import java.util.Random;
 
-public abstract class Personagem implements  Clonobale, {
+public abstract class Personagem implements  Cloneable, {
 
     protected String nome;
     protected byte pontosVida, ataque, defesa, nivel;
@@ -86,7 +86,7 @@ public abstract class Personagem implements  Clonobale, {
 
         while(this.pontosVida > 0 && inimigo.getPontosVida() > 0) {
             System.out.println("\nO que deseja fazer?");
-            System.out.println("1) Atacar")
+            System.out.println("1) Atacar");
             System.out.println("2) Usar Item");
             System.out.println("3) Fugir");
             System.out.print("Escolha: ");
@@ -178,9 +178,9 @@ public abstract class Personagem implements  Clonobale, {
         this.nivel++;
         System.out.println("\nVocê subiu de nível! Agora você está no nível " + this.nivel);
 
-        System.out.println("\nVocê ganhou um ponto de atríbuto.")
-        System.out.println("O que deseja upar?")
-        System.out.println("1) Vida")
+        System.out.println("\nVocê ganhou um ponto de atríbuto.");
+        System.out.println("O que deseja upar?");
+        System.out.println("1) Vida");
         System.out.println("2) Ataque");
         System.out.println("3) Defesa");
 
