@@ -1,7 +1,7 @@
 import java.util.Scanner;
 import java.util.Random;
 
-public abstract class Personagem implements  Cloneable, {
+public abstract class Personagem implements  Cloneable {
 
     protected String nome;
     protected byte pontosVida, ataque, defesa, nivel;

@@ -22,7 +22,7 @@ Item[] itemLendario = {
     new Item("Capa da Invisibilidade", "Não recebe o proximo ataque", "Invisibilidade", (byte)1)
 };
 
-public class Item implements  Comparable<Item>{
+public class Item implements Comparable<Item>{
     private String nome;
     private String descricao;
     private String efeito;
