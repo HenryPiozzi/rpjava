@@ -132,7 +132,24 @@ public abstract class Personagem implements  Cloneable {
                 System.out.println("Você venceu a batalha!");
 
                 uparNivel(nivel);
-                // Colocar aqui o item aleatório
+
+                Random sorteio = new Random();
+                int chance = sorteio.nextInt(100); // de 0 a 99
+                Item itemDropado;
+
+                if (chance < 50) { // 50% de chance de comum
+                    itemDropado = Item.ITEM_COMUM[sorteio.nextInt(Item.ITEM_COMUM.length)];
+                } else if (chance < 80) { // 30% de chance de raro
+                    itemDropado = Item.ITEM_RARO[sorteio.nextInt(Item.ITEM_RARO.length)];
+                } else if (chance < 95) { // 15% de chance de épico
+                    itemDropado = Item.ITEM_EPICO[sorteio.nextInt(Item.ITEM_EPICO.length)];
+                } else { // 5% de chance de lendário
+                    itemDropado = Item.ITEM_LENDARIO[sorteio.nextInt(Item.ITEM_LENDARIO.length)];
+                }
+
+                System.out.println("Você encontrou um item: " + itemDropado.getNome() + "!");
+                this.inventario.adicionarItem(itemDropado);
+
                 break;
             }
             // Jogador é derrotado
