@@ -4,10 +4,14 @@ import java.util.Random;
 public abstract class Personagem implements  Cloneable {
 
     protected String nome;
-    protected byte pontosVida, ataque, defesa, nivel;
+    protected short pontosVida, ataque, defesa;
+    protected short bonusAtaqueTemporario = 0;
+    protected short bonusDefesaTemporario = 0;
+    protected boolean efeitoAtivo = false;
+    protected byte nivel;
     protected Inventario inventario;
 
-    public Personagem (String nome, byte pontosVida, byte ataque, byte defesa, byte nivel, Inventario inventario) {
+    public Personagem (String nome, short pontosVida, short ataque, short defesa, byte nivel, Inventario inventario) {
         this.nome = nome;
         this.pontosVida = pontosVida;
         this.ataque = ataque;
@@ -25,33 +29,33 @@ public abstract class Personagem implements  Cloneable {
         return this.nome;
     }
 
-    public void setPontosVida(byte pontosVida) throws Exception {
-        if (pontosVida <= 0)
+    public void setPontosVida(short pontosVida) throws Exception {
+        if (pontosVida < 0)
             throw new Exception("Pontos de vida inválidos");
         this.pontosVida = pontosVida;
     }
 
-    public byte getPontosVida() {
+    public short getPontosVida() {
         return this.pontosVida;
     }
 
-    public void setAtaque(byte ataque) throws Exception {
+    public void setAtaque(short ataque) throws Exception {
         if (ataque < 0)
             throw new Exception("Ataque inválido");
         this.ataque = ataque;
     }
 
-    public byte getAtaque() {
+    public short getAtaque() {
         return this.ataque;
     }
 
-    public void setDefesa(byte defesa) throws Exception {
+    public void setDefesa(short defesa) throws Exception {
         if (defesa < 0)
             throw new Exception("Defesa inválida");
         this.defesa = defesa;
     }
 
-    public byte getDefesa() {
+    public short getDefesa() {
         return this.defesa;
     }
 
@@ -96,81 +100,93 @@ public abstract class Personagem implements  Cloneable {
 
             switch(escolha) {
                 case 1 -> {
-
-                    //Joga o dado
-                    byte jogadorDado = (byte) (random.nextInt(6) + 1);
-                    byte inimigoDado = (byte) (random.nextInt(6) + 1);
-
-                    //Soma o dado com o ataque
-                    byte ataqueJogador = (byte) (this.ataque + jogadorDado);
-                    byte ataqueInimigo = (byte) (inimigo.getAtaque() + inimigoDado);
-
-                    System.out.println("\n" + this.nome + " rolou " + jogadorDado + " e ficou com " ataqueJogador " de ataque!");
-                    System.out.println(inimigo.getNome + " rolou " + inimigoDado + " e ficou com " ataqueInimigo " de ataque!");
-
-                    //Ataque do jogador
-                    if(ataqueJogador > inimigo.getDefesa()) {
-                        byte danoJogador = (byte) (ataqueJogador - inimigo.getDefesa());
-                        inimigo.setPontosVida((byte) (inimigo.getPontosVida() - danoJogador));
-
-                        System.out.println("Você causou" + danoJogador + " de dano!");
-                        System.out.println(inimigo.getNome() " está agora com " + inimigo.getPontosVida() " de vida!");
-                    } else {
-                        System.out.println(inimigo.getNome() + "defendeu seu ataque! Ataque menor que a defesa.");
-                    }
-
-                    // Inimigo é derrotado
-                    if (inimigo.getPontosVida() <= 0) {
-                        System.out.println("\n" + inimigo.getNome() + " foi derrotado!");
-                        System.out.println("Você venceu a batalha!");
-
-                        uparNivel(nivel);
-                        // Colocar aqui o item aleatório
-
-                        break;
-                    }
-
-                    // Ataque do inimigo
-                    if(ataqueInimigo > this.defesa) {
-                        byte danoInimigo = (byte) (ataqueInimigo - this.defesa);
-                        this.setPontosVida((byte) (this.pontosVida - danoInimigo));
-
-                        System.out.println("Inimigo causou " + danoInimigo + " de dano!");
-                        System.out.println(this.nome " está agora com " + this.pontosVida " de vida!");
-                    } else {
-                        System.out.println(this.nome + "defendeu o ataque! Ataque menor que a defesa.");
-                    }
-
-                    // Jogador é derrotado
-                    if (this.pontosVida <= 0) {
-                        System.out.println("\n" + this.nome " foi derrotado!");
-                        break;
-                    }
+                    atacar(inimigo, random);
                 }
-
                 case 2 -> {
-                    System.out.print("\nInventário: ");
-                    this.getInventario().listarItens();
-
-                    System.out.print("Digite o nome do item: ");
-                    String nomeItem = scanner.nextLine();
-                    boolean usandoItem = this.getInventario().usarItem(nomeItem);
-
-                    if (usandoItem) {
-                        System.out.println(" Você usou " + nomeItem + "!");
-                    } else {
-                        System.out.println("Item não encontrado ou sem quantidade!");
-                    }
+                    usarItem();
                 }
-
                 case 3 -> {
-                    System.out.println("\nVocê fugiu da batalha!");
+                    fugir();
                     return;
                 }
-
                 default -> System.out.println("\nEscolha uma dessas opções!");
             }
+            // Inimigo é derrotado
+            if (inimigo.getPontosVida() <= 0) {
+                System.out.println("\n" + inimigo.getNome() + " foi derrotado!");
+                System.out.println("Você venceu a batalha!");
+
+                uparNivel(nivel);
+                // Colocar aqui o item aleatório
+                break;
+            }
+            // Jogador é derrotado
+            if (this.pontosVida <= 0) {
+                System.out.println("\n" + this.nome + " foi derrotado!");
+                break;
+            }
         }
+    }
+
+    private void atacar(Inimigo inimigo, Random random) {
+        //Joga o dado
+        short jogadorDado = (short) (random.nextInt(6) + 1);
+        short inimigoDado = (short) (random.nextInt(6) + 1);
+
+        //Soma o dado com o ataque
+        short ataqueJogador = (short) (this.ataque + this.bonusAtaqueTemporario + jogadorDado);
+        short ataqueInimigo = (short) (inimigo.getAtaque() + inimigoDado);
+
+        System.out.println("\n" + this.nome + " rolou " + jogadorDado + " e ficou com " + ataqueJogador + " de ataque!");
+        System.out.println(inimigo.getNome + " rolou " + inimigoDado + " e ficou com " + ataqueInimigo + " de ataque!");
+
+        //Ataque do jogador (Defesa do Inimigo)
+        if(ataqueJogador > inimigo.getDefesa()) {
+            short danoJogador = (short) (ataqueJogador - inimigo.getDefesa());
+            inimigo.setPontosVida((short) (inimigo.getPontosVida() - danoJogador));
+
+            System.out.println("Você causou" + danoJogador + " de dano!");
+            System.out.println(inimigo.getNome() " está agora com " + inimigo.getPontosVida() + " de vida!");
+        } else {
+            System.out.println(inimigo.getNome() + "defendeu seu ataque! Ataque menor que a defesa.");
+        }
+
+        // Ataque do inimigo (Defesa do jogador)
+        if(ataqueInimigo > this.defesa) {
+            byte danoInimigo = (short) (ataqueInimigo - (this.defesa + this.bonusDefesaTemporario));
+            this.setPontosVida((short) (this.pontosVida - danoInimigo));
+
+            System.out.println("Inimigo causou " + danoInimigo + " de dano!");
+            System.out.println(this.nome + " está agora com " + this.pontosVida " de vida!");
+        } else {
+            System.out.println(this.nome + "defendeu o ataque! Ataque menor que a defesa.");
+        }
+
+        // Remove os buffs temporários após o turno.
+        if (efeitoAtivo) {
+            bonusAtaqueTemporario = 0;
+            bonusDefesaTemporario = 0;
+            efeitoAtivo = false;
+        }
+    }
+
+    private void usarItem() {
+        System.out.print("\nInventário: ");
+        this.getInventario().listarItens();
+
+        System.out.print("Digite o nome do item: ");
+        String nomeItem = scanner.nextLine();
+        boolean usandoItem = this.getInventario().usarItem(nomeItem);
+
+        if (usandoItem) {
+            System.out.println(" Você usou " + nomeItem + "!");
+        } else {
+            System.out.println("Item não encontrado ou sem quantidade!");
+        }
+    }
+
+    private void fugir() {
+        System.out.println("\nVocê fugiu da batalha!");
     }
 
     public void uparNivel(byte nivel) {
@@ -235,9 +251,9 @@ public abstract class Personagem implements  Cloneable {
         int ret = 666;
 
         ret = ret * 13 + this.nome.hashCode();
-        ret = ret * 13 + ((Byte)this.pontosVida).hashCode();
-        ret = ret * 13 + ((Byte)this.ataque).hashCode();
-        ret = ret * 13 + ((Byte)this.defesa).hashCode();
+        ret = ret * 13 + ((Short)this.pontosVida).hashCode();
+        ret = ret * 13 + ((Short)this.ataque).hashCode();
+        ret = ret * 13 + ((Short)this.defesa).hashCode();
         ret = ret * 13 + ((Byte)this.nivel).hashCode();
         ret = ret * 13 + this.inventario.hashCode();
 

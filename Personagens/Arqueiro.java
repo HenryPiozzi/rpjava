@@ -1,7 +1,7 @@
 public class Arqueiro extends Personagem  implements Cloneable {
 
     public Arqueiro(String nome) throws Exception {
-        super(nome, (byte)20, (byte)5, (byte)5, (byte)1, new Inventario());
+        super(nome, (short)20, (short)5, (short)5, (byte)1, new Inventario());
     }
 
     @Override
