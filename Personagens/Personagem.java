@@ -4,19 +4,26 @@ import java.util.Random;
 public abstract class Personagem implements  Cloneable {
 
     protected String nome;
-    protected short pontosVida, ataque, defesa;
-    protected short bonusAtaqueTemporario = 0;
-    protected short bonusDefesaTemporario = 0;
-    protected boolean efeitoAtivo = false;
+    protected short pontosVida, pontosVidaMaximo, ataque, defesa, bonusAtaqueTemporario, bonusDefesaTemporario;
+    protected boolean efeitoAtivo;
     protected byte nivel;
     protected Inventario inventario;
+
+    protected Scanner scanner = new Scanner(System.in);
 
     public Personagem (String nome, short pontosVida, short ataque, short defesa, byte nivel, Inventario inventario) {
         this.nome = nome;
         this.pontosVida = pontosVida;
+        this.pontosVidaMaximo = pontosVida; // define o limite inicial
         this.ataque = ataque;
         this.defesa = defesa;
+        this.nivel = nivel;
         this.inventario = new Inventario(inventario);
+
+        // Efeito das poções
+        this.bonusAtaqueTemporario = 0;
+        this.bonusDefesaTemporario = 0;
+        this.efeitoAtivo = false;
     }
 
     public void setNome(String nome) throws Exception {
@@ -37,6 +44,16 @@ public abstract class Personagem implements  Cloneable {
 
     public short getPontosVida() {
         return this.pontosVida;
+    }
+
+    public void setPontosVidaMaximo(short pontosVidaMaximo) throws Exception {
+        if (pontosVidaMaximo < 1)
+            throw new Exception("Pontos de vida máxima inválidos");
+        this.pontosVidaMaximo = pontosVidaMaximo;
+    }
+
+    public short getPontosVidaMaximo() {
+        return this.pontosVidaMaximo;
     }
 
     public void setAtaque(short ataque) throws Exception {
@@ -74,8 +91,6 @@ public abstract class Personagem implements  Cloneable {
             throw new Exception("Inventário inválido");
         this.inventario = new Inventario(inventario);
     }
-
-    Scanner scanner = new Scanner(System.in);
 
     public Inventario getInventario() {
         return this.inventario;
@@ -148,12 +163,12 @@ public abstract class Personagem implements  Cloneable {
             System.out.println("Você causou" + danoJogador + " de dano!");
             System.out.println(inimigo.getNome() " está agora com " + inimigo.getPontosVida() + " de vida!");
         } else {
-            System.out.println(inimigo.getNome() + "defendeu seu ataque! Ataque menor que a defesa.");
+            System.out.println(inimigo.getNome() + "defendeu o ataque! Ataque menor que a defesa.");
         }
 
         // Ataque do inimigo (Defesa do jogador)
         if(ataqueInimigo > this.defesa) {
-            byte danoInimigo = (short) (ataqueInimigo - (this.defesa + this.bonusDefesaTemporario));
+            short danoInimigo = (short) (ataqueInimigo - (this.defesa + this.bonusDefesaTemporario));
             this.setPontosVida((short) (this.pontosVida - danoInimigo));
 
             System.out.println("Inimigo causou " + danoInimigo + " de dano!");
@@ -176,12 +191,74 @@ public abstract class Personagem implements  Cloneable {
 
         System.out.print("Digite o nome do item: ");
         String nomeItem = scanner.nextLine();
+
+        Item itemUsado = null;
+        for (Item i : this.getInventario().clone().itens) {
+            if (i.getNome().equalsIgnoreCase(nomeItem)) {
+                itemUsado = i;
+                break;
+            }
+        }
+
         boolean usandoItem = this.getInventario().usarItem(nomeItem);
 
         if (usandoItem) {
             System.out.println(" Você usou " + nomeItem + "!");
+
+            if (itemUsado != null) {
+               aplicarEfeitoTemporario(itemUsado);
+               System.out.println("Efeito aplicado: " + itemUsado.getEfeito());
+            }
         } else {
             System.out.println("Item não encontrado ou sem quantidade!");
+        }
+    }
+
+    private void aplicarEfeitoTemporario(Item item) {
+        String nomeItem = item.getNome().toLowerCase();
+
+        switch (nomeItem) {
+            case "poção de vida pequena" -> {
+                short cura = (short) (this.pontosVidaMaximo * 0.3);
+                this.pontosVida += cura;
+                if (this.pontosVida > this.pontosVidaMaximo)
+                    this.pontosVida = this.pontosVidaMaximo;
+                System.out.println("Você recuperou " + cura + " de HP!");
+            }
+            case "poção media de vida" -> {
+                short cura = (short) (this.pontosVidaMaximo * 0.5);
+                this.pontosVida += cura;
+                if (this.pontosVida > this.pontosVidaMaximo)
+                    this.pontosVida = this.pontosVidaMaximo;
+                System.out.println("Você recuperou " + cura + " de HP!");
+            }
+            case "poção grande de vida" -> {
+                short cura = (short) (this.pontosVidaMaximo * 0.75);
+                this.pontosVida += cura;
+                if (this.pontosVida > this.pontosVidaMaximo)
+                    this.pontosVida = this.pontosVidaMaximo;
+                System.out.println("Você recuperou " + cura + " de HP!");
+            }
+            case "elixir dos deuses" -> {
+                this.pontosVida = this.pontosVidaMaximo;
+                System.out.println("Vida totalmente restaurada!");
+            }
+            case "poção de ataque" -> {
+                this.bonusAtaqueTemporario = 3;
+                this.efeitoAtivo = true;
+                System.out.println("Seu ataque aumentou temporariamente!");
+            }
+            case "amuleto raro" -> {
+                this.bonusDefesaTemporario = 3;
+                this.efeitoAtivo = true;
+                System.out.println("Sua defesa aumentou temporariamente!");
+            }
+            case "excalibur" -> {
+                this.bonusAtaqueTemporario = 10;
+                this.efeitoAtivo = true;
+                System.out.println("Você usou a Excalibur! Irá causar um dano altíssimo!");
+            }
+            default -> System.out.println("O item não fez efeito.");
         }
     }
 
@@ -205,9 +282,9 @@ public abstract class Personagem implements  Cloneable {
 
         switch (escolha) {
             case 1 -> {
-                this.pontosVida += 5;
-                System.out.println("Vida upada!");
-
+                this.pontosVidaMaximo += 3; // aumenta o limite máximo
+                this.pontosVida = this.pontosVidaMaximo; // recupera toda a vida ao upar
+                System.out.println("Vida upada e restaurada!");
             }
             case 2 -> {
                 this.ataque += 1;
@@ -223,7 +300,9 @@ public abstract class Personagem implements  Cloneable {
 
     @Override
     public String toString() {
-        return this.nome + " (Nível " + this.nivel + ") - Vida: " + this.pontosVida +
+        return this.nome +
+                " (Nível " + this.nivel + ") " +
+                "- Vida: " + this.pontosVida + "/" + this.pontosVidaMaximo +
                 ", Ataque: " + this.ataque + ", Defesa: " + this.defesa +
                 ", Inventário: " + this.inventario.listarItens();
     }
@@ -268,10 +347,16 @@ public abstract class Personagem implements  Cloneable {
 
         this.nome = modelo.nome;
         this.pontosVida = modelo.pontosVida;
+        this.pontosVidaMaximo = modelo.pontosVidaMaximo;
         this.ataque = modelo.ataque;
         this.defesa = modelo.defesa;
         this.nivel = modelo.nivel;
         this.inventario = new Inventario(modelo.inventario);
+
+        // Cópia dos efeitos
+        this.bonusAtaqueTemporario = modelo.bonusAtaqueTemporario;
+        this.bonusDefesaTemporario = modelo.bonusDefesaTemporario;
+        this.efeitoAtivo = modelo.efeitoAtivo;
     }
 
     // Cada subclasse implementa seu clone usando o construtor de cópia acima,
