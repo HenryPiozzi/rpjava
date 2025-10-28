@@ -334,8 +334,12 @@ public abstract class Personagem implements  Cloneable {
 
         if (!this.nome.equals(p.nome)) return false;
         if (this.pontosVida != p.pontosVida) return false;
+        if (this.pontosVidaMaximo != p.pontosVidaMaximo) return false;
         if (this.ataque != p.ataque) return false;
         if (this.defesa != p.defesa) return false;
+        if (this.bonusDefesaTemporario != p.bonusDefesaTemporario) return false;
+        if (this.bonusAtaqueTemporario != p.bonusAtaqueTemporario) return false;
+        if (this.efeitoAtivo != p.efeitoAtivo) return false;
         if (this.nivel != p.nivel) return false;
         if (!this.inventario.equals(p.inventario)) return false;
 
@@ -348,8 +352,12 @@ public abstract class Personagem implements  Cloneable {
 
         ret = ret * 13 + this.nome.hashCode();
         ret = ret * 13 + ((Short)this.pontosVida).hashCode();
+        ret = ret * 13 + ((Short)this.pontosVidaMaximoo).hashCode();
         ret = ret * 13 + ((Short)this.ataque).hashCode();
         ret = ret * 13 + ((Short)this.defesa).hashCode();
+        ret = ret * 13 + ((Short)this.bonusDefesaTemporario).hashCode();
+        ret = ret * 13 + ((Short)this.bonusAtaqueTemporario).hashCode();
+        ret = ret * 13 + ((Boolean)this.efeitoAtivo).hashCode();
         ret = ret * 13 + ((Byte)this.nivel).hashCode();
         ret = ret * 13 + this.inventario.hashCode();
 
