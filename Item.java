@@ -1,28 +1,6 @@
-Item[] itemComum = {
-    new Item("Poção de Vida pequena", "Recupera 30% de HP", "Cura", (byte)1),
-    new Item("Poção de Ataque", "Causa X de dano a mais no proximo ataque", "Recupera mana", (byte)1),
-    new Item("Pedra Pequena", "Uma pedra comum, pode ser jogada em inimigos", "Dano leve", (byte)1)
-};
+import java.util.concurrent.ThreadLocalRandom;
 
-Item[] itemRaro = {
-    new Item("Poção Media de Vida", "Recupera 50% de HP", "Cura", (byte)1),
-    new Item("Bomba de Fogo", "Causa dano de fogo", "Explosão", (byte)1),
-    new Item("Amuleto Raro", "Aumenta 10% da defesa", "Buff de defesa", (byte)1)
-};
-
-Item[] itemEpico = {
-    new Item("Oleo Flamejante", "Deixa o inimigo pegando fogo, recebendo dano no turno seguinte", "Dano de fogo", (byte)1),
-    new Item("Anel da Sabedoria", "Aumenta inteligência em 20", "Buff", (byte)1),
-    new Item("Poção Grande de Vida", "Recupera 75% de HP", "Cura", (byte)1)
-};
-
-Item[] itemLendario = {
-    new Item("Excalibur", "A lendária espada sagrada", "Dano massivo", (byte)1),
-    new Item("Elixir dos Deuses", "Recupera todo HP", "Cura total", (byte)1),
-    new Item("Capa da Invisibilidade", "Não recebe o proximo ataque", "Invisibilidade", (byte)1)
-};
-
-public class Item implements Comparable<Item>{
+public class Item implements Comparable<Item> {
     private String nome;
     private String descricao;
     private String efeito;
@@ -37,11 +15,12 @@ public class Item implements Comparable<Item>{
     private static final Item[] ITEM_RARO = {
         new Item("Poção Média de Vida", "Recupera 50% de HP", "Cura", (byte) 1),
         new Item("Bomba de Fogo", "Causa dano de fogo", "Explosão", (byte) 1),
-        new Item("Amuleto Raro", "Aumenta 10% da defesa", "Buff de defesa", (byte) 1)
+        new Item("Amuleto Raro", "Aumenta 10% da defesa", "Buff de defesa", (byte) 1),
+        new Item("Elixir da Fúria", "Aumenta drasticamente o ataque no próximo turno", "Buff de ataque", (byte) 1)
     };
 
     private static final Item[] ITEM_EPICO = {
-        new Item("Óleo Flamejante", "Deixa o inimigo pegando fogo, recebendo dano no turno seguinte", "Dano de fogo", (byte) 1),
+        new Item("Essência do Berserker", "Aumenta ataque e defesa simultaneamente por 2 turnos", "Buff duplo", (byte) 1),
         new Item("Anel da Sabedoria", "Aumenta inteligência em 20", "Buff", (byte) 1),
         new Item("Poção Grande de Vida", "Recupera 75% de HP", "Cura", (byte) 1)
     };
@@ -52,27 +31,34 @@ public class Item implements Comparable<Item>{
         new Item("Capa da Invisibilidade", "Não recebe o próximo ataque", "Invisibilidade", (byte) 1)
     };
 
-
     public static Item itemAleatorio(int nivelDoItem) {
         switch (nivelDoItem) {
             case 0:
-                return ITEM_COMUM[ThreadLocalRandom.current().nextInt(ITEM_COMUM.length)];
+                return new Item(ITEM_COMUM[ThreadLocalRandom.current().nextInt(ITEM_COMUM.length)]);
             case 1:
-                return ITEM_RARO[ThreadLocalRandom.current().nextInt(ITEM_RARO.length)];
+                return new Item(ITEM_RARO[ThreadLocalRandom.current().nextInt(ITEM_RARO.length)]);
             case 2:
-                return ITEM_EPICO[ThreadLocalRandom.current().nextInt(ITEM_EPICO.length)];
+                return new Item(ITEM_EPICO[ThreadLocalRandom.current().nextInt(ITEM_EPICO.length)]);
             case 3:
-                return ITEM_LENDARIO[ThreadLocalRandom.current().nextInt(ITEM_LENDARIO.length)];
+                return new Item(ITEM_LENDARIO[ThreadLocalRandom.current().nextInt(ITEM_LENDARIO.length)]);
             default:
-                return null;
+                return new Item(ITEM_COMUM[0]);
         }
     }
 
-    public Item(String nome, String descricao, String efeito, byte quantidade){
+    public Item(String nome, String descricao, String efeito, byte quantidade) {
         this.nome = nome;
         this.descricao = descricao;
         this.efeito = efeito;
         this.quantidade = quantidade;
+    }
+
+    // Construtor de cópia
+    public Item(Item modelo) {
+        this.nome = modelo.nome;
+        this.descricao = modelo.descricao;
+        this.efeito = modelo.efeito;
+        this.quantidade = modelo.quantidade;
     }
 
     public String getNome() {
@@ -175,5 +161,4 @@ public class Item implements Comparable<Item>{
         if (b == null) return 1;
         return a.compareTo(b);
     }
-
 }

@@ -9,6 +9,15 @@ public class Inventario {
         this.itens = new ArrayList<>();
     }
 
+    // Construtor de cópia
+    public Inventario(Inventario modelo) {
+        this.itens = new ArrayList<>();
+        for (Item i : modelo.itens) {
+            Item novoItem = new Item(i.getNome(), i.getDescricao(), i.getEfeito(), i.getQuantidade());
+            this.itens.add(novoItem);
+        }
+    }
+
     public void adicionarItem(Item item) {
         for (Item i : itens) {
             if (i.getNome().equals(item.getNome())) {
@@ -45,10 +54,19 @@ public class Inventario {
             System.out.println("Seu inventário está vazio.");
             return;
         }
-        System.out.println("Itens no inventário:");
+        System.out.println("\n╔═══════════════════════════════════════════════════════════════╗");
+        System.out.println("║                        INVENTÁRIO                             ║");
+        System.out.println("╚═══════════════════════════════════════════════════════════════╝");
+        System.out.println();
         for (Item i : itens) {
-            System.out.println("- " + i.getNome() + " (x" + i.getQuantidade() + ") — " + i.getDescricao());
+            System.out.println("  🎒 " + i.getNome() + " (x" + i.getQuantidade() + ")");
+            System.out.println("     " + i.getDescricao());
+            System.out.println();
         }
+    }
+
+    public List<Item> getItens() {
+        return this.itens;
     }
 
     @Override
@@ -59,5 +77,20 @@ public class Inventario {
             clone.itens.add(novoItem);
         }
         return clone;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
+        
+        Inventario outro = (Inventario) obj;
+        return this.itens.equals(outro.itens);
+    }
+
+    @Override
+    public int hashCode() {
+        return itens != null ? itens.hashCode() : 0;
     }
 }
