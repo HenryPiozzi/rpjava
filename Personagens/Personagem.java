@@ -152,9 +152,12 @@ public abstract class Personagem implements Cloneable {
                 System.out.println("\n✨════════════════════════════════════════════════════════✨");
                 System.out.println("   🎉 VITÓRIA! Você derrotou " + inimigo.getNome() + "! 🎉");
                 System.out.println("✨════════════════════════════════════════════════════════✨");
+                
+                Item itemDropado = Item.itemAleatorio(random.nextInt(4));
+                System.out.println("\n🎁 Item dropado: " + itemDropado.getNome() + "!");
+                this.inventario.adicionarItem(itemDropado);
 
                 uparNivel();
-                dropearItem(random);
                 break;
             }
 
@@ -325,24 +328,6 @@ public abstract class Personagem implements Cloneable {
             
             return false;
         }
-    }
-
-    private void dropearItem(Random random) {
-        int chance = random.nextInt(100);
-        Item itemDropado;
-
-        if (chance < 50) {
-            itemDropado = Item.itemAleatorio(0);
-        } else if (chance < 80) {
-            itemDropado = Item.itemAleatorio(1);
-        } else if (chance < 95) {
-            itemDropado = Item.itemAleatorio(2);
-        } else {
-            itemDropado = Item.itemAleatorio(3);
-        }
-
-        System.out.println("\n🎁 Item dropado: " + itemDropado.getNome() + "!");
-        this.inventario.adicionarItem(itemDropado);
     }
 
     private void uparNivel() {
