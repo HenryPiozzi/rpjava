@@ -136,14 +136,14 @@ public abstract class Personagem implements Cloneable {
         System.out.println("║                      BATALHA INICIADA!                        ║");
         System.out.println("╚═══════════════════════════════════════════════════════════════╝");
         System.out.println();
-        System.out.println(this.nome + " VS " + inimigo.nome);
+        System.out.println(this.nome + " VS " + inimigo.getNome());
         System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
         System.out.println();
 
-        while(this.pontosVida > 0 && inimigo.pontosVida > 0) {
+        while(this.pontosVida > 0 && inimigo.getPontosVida() > 0) {
             System.out.println("\n┌─────────────────────────────────────────────────────────────┐");
             System.out.println("│ HP Jogador: " + this.pontosVida + "/" + this.pontosVidaMaximo + 
-                             " | HP Inimigo: " + inimigo.pontosVida + "       ");
+                             " | HP Inimigo: " + inimigo.getPontosVida() + "       ");
             System.out.println("└─────────────────────────────────────────────────────────────┘");
             System.out.println();
             System.out.println("O que deseja fazer?");
@@ -176,9 +176,9 @@ public abstract class Personagem implements Cloneable {
                 default -> System.out.println("\nEscolha inválida!");
             }
 
-            if (inimigo.pontosVida <= 0) {
+            if (inimigo.getPontosVida <= 0) {
                 System.out.println("\n════════════════════════════════════════════════════════");
-                System.out.println("           VITÓRIA! Você derrotou " + inimigo.nome);
+                System.out.println("           VITÓRIA! Você derrotou " + inimigo.getNome());
                 System.out.println("════════════════════════════════════════════════════════");
                 
                 Item itemDropado = Item.itemAleatorio(random.nextInt(4));
@@ -201,20 +201,20 @@ public abstract class Personagem implements Cloneable {
         short inimigoDado = (short) (random.nextInt(6) + 1);
 
         short ataqueJogador = (short) (this.ataque + this.bonusAtaqueTemporario + jogadorDado);
-        short ataqueInimigo = (short) (inimigo.ataque + inimigoDado);
+        short ataqueInimigo = (short) (inimigo.getAtaque() + inimigoDado);
 
         System.out.println("\n" + this.nome + " rolou " + jogadorDado + " → Ataque total: " + ataqueJogador);
-        System.out.println(inimigo.nome + " rolou " + inimigoDado + " → Ataque total: " + ataqueInimigo);
+        System.out.println(inimigo.getNome() + " rolou " + inimigoDado + " → Ataque total: " + ataqueInimigo);
         System.out.println();
 
-        if(ataqueJogador > inimigo.defesa) {
-            short danoJogador = (short) (ataqueJogador - inimigo.defesa);
-            inimigo.setPontosVida((short) (inimigo.pontosVida - danoJogador));
+        if(ataqueJogador > inimigo.getDefesa()) {
+            short danoJogador = (short) (ataqueJogador - inimigo.getDefesa());
+            inimigo.setPontosVida((short) (inimigo.getPontosVida() - danoJogador));
 
             System.out.println("Você deu " + danoJogador + " de dano!");
-            System.out.println(inimigo.nome + " está com " + inimigo.pontosVida + " HP");
+            System.out.println(inimigo.getNome() + " está com " + inimigo.getPontosVida() + " HP");
         } else {
-            System.out.println(inimigo.nome + " defendeu o ataque!");
+            System.out.println(inimigo.getNome() + " defendeu o ataque!");
         }
 
         if(ataqueInimigo > this.defesa) {
