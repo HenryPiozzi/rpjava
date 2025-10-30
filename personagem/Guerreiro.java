@@ -1,4 +1,4 @@
-package personagem;
+package Personagem;
 
 public class Guerreiro extends Personagem  implements  Cloneable {
 

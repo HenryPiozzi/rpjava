@@ -1,4 +1,4 @@
-package personagem;
+package Personagem;
 
 import java.util.concurrent.ThreadLocalRandom;
 

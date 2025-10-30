@@ -1,4 +1,4 @@
-package personagem;
+package Personagem;
 
  class Arqueiro extends Personagem  implements Cloneable {
 
