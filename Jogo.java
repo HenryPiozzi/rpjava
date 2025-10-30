@@ -553,19 +553,19 @@ public class Jogo {
         System.out.println();
         System.out.println(jogador);
         System.out.println();
-        System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        System.out.println("----------------------------------------------------------------------");
         System.out.println("PROGRESSO DA MISSÃO:");
         System.out.println("  Cristal da Natureza: " + (cristaisPurificados[0] ? " PURIFICADO" : " CORROMPIDO"));
         System.out.println("  Cristal da Água: " + (cristaisPurificados[1] ? " PURIFICADO" : " CORROMPIDO"));
         System.out.println("  Cristal do Fogo: " + (cristaisPurificados[2] ? " PURIFICADO" : " CORROMPIDO"));
-        System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        System.out.println("----------------------------------------------------------------------");
         System.out.println("  • Inimigos derrotados: " + inimigosDerrotados);
         System.out.println("  • Capítulo atual: " + capituloAtual);
     }
 
     private void mostrarStatusRapido() {
         String classe = jogador.getClass().getSimpleName();
-        System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        System.out.println("----------------------------------------------------------------------");
         System.out.println(classe + " | Nível: " + jogador.getNivel() + 
                          " | HP: " + jogador.getPontosVida() + "/" + jogador.getPontosVidaMaximo() +
                          " | Capítulo: " + capituloAtual);
@@ -574,7 +574,7 @@ public class Jogo {
                            (cristaisPurificados[1] ? 1 : 0) + 
                            (cristaisPurificados[2] ? 1 : 0);
         System.out.println("Cristais Purificados: " + cristaisPurif + "/3");
-        System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        System.out.println("----------------------------------------------------------------------");
     }
 
     private void encerrarJogo() {

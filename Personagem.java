@@ -132,7 +132,7 @@ public abstract class Personagem implements Cloneable {
         System.out.println("╚═══════════════════════════════════════════════════════════════╝");
         System.out.println();
         System.out.println(this.nome + " VS " + inimigo.getNome());
-        System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        System.out.println("----------------------------------------------------------------------");
         System.out.println();
 
         while(this.pontosVida > 0 && inimigo.getPontosVida() > 0) {
@@ -289,7 +289,7 @@ public abstract class Personagem implements Cloneable {
         int chance = random.nextInt(100);
         
         if (chance < 50) {
-            System.out.println("✓ Você conseguiu fugir!");
+            System.out.println("Você conseguiu fugir!");
             return true;
         } else {
             System.out.println("Você não conseguiu fugir!");
