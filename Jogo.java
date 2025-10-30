@@ -5,8 +5,8 @@ public class Jogo {
     private Personagem jogador;
     private Scanner scanner;
     private boolean jogoAtivo;
-    private int capituloAtual;
-    private int inimigosDerrotados;
+    private byte capituloAtual;
+    private short inimigosDerrotados;
     private Random dado;
     private boolean[] cristaisPurificados;
     private boolean introducaoMostrada;
@@ -47,9 +47,9 @@ public class Jogo {
         System.out.println("Recuperar e purificar os três cristais antes que seja tarde demais!");
         System.out.println();
         System.out.println("Os cristais estão escondidos em:");
-        System.out.println("  🌲 Floresta Sombria - Cristal da Natureza");
-        System.out.println("  ❄️  Cavernas de Gelo - Cristal da Água");
-        System.out.println("  🔥 Torre Carmesim - Cristal do Fogo");
+        System.out.println("  Floresta Sombria - Cristal da Natureza");
+        System.out.println("  Cavernas de Gelo - Cristal da Água");
+        System.out.println("  Torre Carmesim - Cristal do Fogo");
         System.out.println();
         System.out.print("Pressione ENTER para começar sua jornada...");
         scanner.nextLine();
@@ -61,15 +61,15 @@ public class Jogo {
         System.out.println("║                    ESCOLHA SUA CLASSE                         ║");
         System.out.println("╚═══════════════════════════════════════════════════════════════╝");
         System.out.println();
-        System.out.println("1 - ⚔️  GUERREIRO");
+        System.out.println("1 - GUERREIRO");
         System.out.println("    Forte e resistente, especialista em combate corpo a corpo.");
         System.out.println("    + Alta defesa e vida");
         System.out.println();
-        System.out.println("2 - 🔮 MAGO");
+        System.out.println("2 - MAGO");
         System.out.println("    Mestre das artes arcanas, causa grande dano mágico.");
         System.out.println("    + Alto ataque mágico");
         System.out.println();
-        System.out.println("3 - 🏹 ARQUEIRO");
+        System.out.println("3 - ARQUEIRO");
         System.out.println("    Ágil e preciso, ataca à distância com maestria.");
         System.out.println("    + Balanceado e versátil");
         System.out.println();
@@ -111,7 +111,7 @@ public class Jogo {
     private void darItensIniciais() {
         Item pocaoVida = new Item("Poção de Vida pequena", "Recupera 30% de HP", "Cura", (byte)3);
         jogador.getInventario().adicionarItem(pocaoVida);
-        System.out.println("\n🎁 Você recebeu 3x Poções de Vida pequena!");
+        System.out.println("\nVocê recebeu 3x Poções de Vida pequena!");
         pausar();
     }
 
@@ -123,12 +123,12 @@ public class Jogo {
             System.out.println("║                         MENU PRINCIPAL                        ║");
             System.out.println("╚═══════════════════════════════════════════════════════════════╝");
             System.out.println();
-            System.out.println("1 - 🗺️  Explorar");
-            System.out.println("2 - 🎒 Inventário");
-            System.out.println("3 - 📊 Status Completo");
-            System.out.println("4 - 💾 Criar Save Point");
-            System.out.println("5 - 🔄 Carregar Save Point");
-            System.out.println("6 - 🚪 Sair do Jogo");
+            System.out.println("1 - Explorar");
+            System.out.println("2 - Inventário");
+            System.out.println("3 - Status Completo");
+            System.out.println("4 - Criar Save Point");
+            System.out.println("5 - Carregar Save Point");
+            System.out.println("6 - Sair do Jogo");
             System.out.println();
             System.out.print("Escolha uma opção: ");
 
@@ -157,7 +157,7 @@ public class Jogo {
                 case 5 -> carregarSavePoint();
                 case 6 -> encerrarJogo();
                 default -> {
-                    System.out.println("\n❌ Escolha inválida!");
+                    System.out.println("\nEscolha inválida!");
                     pausar();
                 }
             }
@@ -179,10 +179,10 @@ public class Jogo {
         String statusCavernas = cristaisPurificados[1] ? "✓ PURIFICADO" : "⚠ CORROMPIDO";
         String statusTorre = cristaisPurificados[2] ? "✓ PURIFICADO" : "⚠ CORROMPIDO";
         
-        System.out.println("1 - 🌲 Floresta Sombria [" + statusFloresta + "]");
-        System.out.println("2 - ❄️  Cavernas de Gelo [" + statusCavernas + "]");
-        System.out.println("3 - 🔥 Torre Carmesim [" + statusTorre + "]");
-        System.out.println("4 - 🏠 Voltar à Vila (descansar)");
+        System.out.println("1 - Floresta Sombria [" + statusFloresta + "]");
+        System.out.println("2 - Cavernas de Gelo [" + statusCavernas + "]");
+        System.out.println("3 - Torre Carmesim [" + statusTorre + "]");
+        System.out.println("4 - Voltar à Vila (descansar)");
         System.out.println();
         System.out.print("Escolha: ");
 
@@ -199,13 +199,13 @@ public class Jogo {
             case 2 -> explorarCavernasDeGelo();
             case 3 -> explorarTorreCarmesim();
             case 4 -> descansarNaVila();
-            default -> System.out.println("\n❌ Opção inválida!");
+            default -> System.out.println("\nOpção inválida!");
         }
     }
 
     private void explorarFlorestaSombria() {
         limparTela();
-        System.out.println("🌲 FLORESTA SOMBRIA 🌲");
+        System.out.println("FLORESTA SOMBRIA");
         System.out.println("═══════════════════════════════════════");
         System.out.println();
         
@@ -226,7 +226,7 @@ public class Jogo {
         
         if (evento < 70) { // 70% chance de combate
             Inimigo inimigo = Inimigo.gerarInimigo(capituloAtual);
-            System.out.println("💀 Um " + inimigo.getNome() + " aparece do nada!");
+            System.out.println("Um " + inimigo.getNome() + " aparece do nada!");
             pausar();
             
             try {
@@ -242,17 +242,17 @@ public class Jogo {
                 System.out.println("Erro durante a batalha!");
             }
         } else { // 30% chance de encontrar tesouro
-            System.out.println("✨ Você encontra um baú escondido entre as raízes!");
+            System.out.println("Você encontra um baú escondido entre as raízes!");
             Item tesouro = Item.itemAleatorio(dado.nextInt(3));
             jogador.getInventario().adicionarItem(tesouro);
-            System.out.println("🎁 Você ganhou: " + tesouro.getNome());
+            System.out.println("Você ganhou: " + tesouro.getNome());
         }
         pausar();
     }
 
     private void verificarProgressoFloresta() {
         if (inimigosDerrotados >= 3 && !cristaisPurificados[0]) {
-            System.out.println("\n✨ VOCÊ ENCONTROU O CRISTAL DA NATUREZA! ✨");
+            System.out.println("\nVOCÊ ENCONTROU O CRISTAL DA NATUREZA!");
             System.out.println();
             System.out.println("O cristal pulsa com energia corrompida...");
             System.out.println("Você sente a escuridão tentando te consumir!");
@@ -260,11 +260,11 @@ public class Jogo {
             System.out.print("Pressione ENTER para purificar o cristal...");
             scanner.nextLine();
             
-            System.out.println("\n🌟 Você concentra sua energia...");
-            System.out.println("🌟 Uma luz brilhante envolve o cristal!");
-            System.out.println("🌟 A escuridão é expelida!");
+            System.out.println("\nVocê concentra sua energia...");
+            System.out.println("Uma luz brilhante envolve o cristal!");
+            System.out.println("A escuridão é expelida!");
             System.out.println();
-            System.out.println("✓ CRISTAL DA NATUREZA PURIFICADO!");
+            System.out.println("CRISTAL DA NATUREZA PURIFICADO!");
             
             cristaisPurificados[0] = true;
             capituloAtual++;
@@ -273,8 +273,8 @@ public class Jogo {
             try {
                 jogador.setPontosVidaMaximo((short)(jogador.getPontosVidaMaximo() + 10));
                 jogador.setPontosVida(jogador.getPontosVidaMaximo());
-                System.out.println("\n🎁 Sua vida máxima aumentou em 10!");
-                System.out.println("🎁 Sua vida foi restaurada!");
+                System.out.println("\nSua vida máxima aumentou em 10!");
+                System.out.println("Sua vida foi restaurada!");
             } catch (Exception e) {}
             
             verificarVitoria();
@@ -284,7 +284,7 @@ public class Jogo {
 
     private void explorarCavernasDeGelo() {
         limparTela();
-        System.out.println("❄️ CAVERNAS DE GELO ❄️");
+        System.out.println("CAVERNAS DE GELO");
         System.out.println("═══════════════════════════════════════");
         System.out.println();
         
@@ -304,7 +304,7 @@ public class Jogo {
         
         if (evento < 65) { // 65% chance de combate
             Inimigo inimigo = Inimigo.gerarInimigo(capituloAtual);
-            System.out.println("💀 Um " + inimigo.getNome() + " congelado ataca!");
+            System.out.println("Um " + inimigo.getNome() + " congelado ataca!");
             pausar();
             
             try {
@@ -320,16 +320,16 @@ public class Jogo {
                 System.out.println("Erro durante a batalha!");
             }
         } else if (evento < 85) { // 20% chance de tesouro
-            System.out.println("✨ Você encontra um cristal de gelo valioso!");
+            System.out.println("Você encontra um cristal de gelo valioso!");
             Item tesouro = Item.itemAleatorio(dado.nextInt(4));
             jogador.getInventario().adicionarItem(tesouro);
-            System.out.println("🎁 Você ganhou: " + tesouro.getNome());
+            System.out.println("Você ganhou: " + tesouro.getNome());
         } else { // 15% chance de armadilha
-            System.out.println("⚠️ ARMADILHA! O chão desmorona!");
+            System.out.println("ARMADILHA! O chão desmorona!");
             try {
                 short dano = (short)(jogador.getPontosVidaMaximo() * 0.15);
                 jogador.setPontosVida((short)(jogador.getPontosVida() - dano));
-                System.out.println("💔 Você sofreu " + dano + " de dano!");
+                System.out.println("Você sofreu " + dano + " de dano!");
                 
                 if (jogador.getPontosVida() <= 0) {
                     gameOver();
@@ -341,16 +341,16 @@ public class Jogo {
 
     private void verificarProgressoCavernas() {
         if (inimigosDerrotados >= 6 && !cristaisPurificados[1]) {
-            System.out.println("\n✨ VOCÊ ENCONTROU O CRISTAL DA ÁGUA! ✨");
+            System.out.println("\nVOCÊ ENCONTROU O CRISTAL DA ÁGUA!");
             System.out.println();
             System.out.println("O cristal está envolto em gelo negro...");
             System.out.print("Pressione ENTER para purificar o cristal...");
             scanner.nextLine();
             
-            System.out.println("\n🌟 Você derrete o gelo com sua determinação!");
-            System.out.println("🌟 O cristal brilha em azul puro!");
+            System.out.println("\nVocê derrete o gelo com sua determinação!");
+            System.out.println("O cristal brilha em azul puro!");
             System.out.println();
-            System.out.println("✓ CRISTAL DA ÁGUA PURIFICADO!");
+            System.out.println("CRISTAL DA ÁGUA PURIFICADO!");
             
             cristaisPurificados[1] = true;
             capituloAtual++;
@@ -358,7 +358,7 @@ public class Jogo {
             // Recompensa
             try {
                 jogador.setAtaque((short)(jogador.getAtaque() + 3));
-                System.out.println("\n🎁 Seu ataque aumentou em 3!");
+                System.out.println("\nSeu ataque aumentou em 3!");
             } catch (Exception e) {}
             
             verificarVitoria();
@@ -368,7 +368,7 @@ public class Jogo {
 
     private void explorarTorreCarmesim() {
         limparTela();
-        System.out.println("🔥 TORRE CARMESIM 🔥");
+        System.out.println("TORRE CARMESIM");
         System.out.println("═══════════════════════════════════════");
         System.out.println();
         
@@ -388,7 +388,7 @@ public class Jogo {
         
         if (evento < 75) { // 75% chance de combate difícil
             Inimigo inimigo = Inimigo.gerarInimigo(capituloAtual + 1); // Inimigos mais fortes
-            System.out.println("💀 Um " + inimigo.getNome() + " flamejante surge!");
+            System.out.println("Um " + inimigo.getNome() + " flamejante surge!");
             pausar();
             
             try {
@@ -404,28 +404,28 @@ public class Jogo {
                 System.out.println("Erro durante a batalha!");
             }
         } else { // 25% chance de item raro
-            System.out.println("✨ Você encontra uma relíquia antiga!");
+            System.out.println("Você encontra uma relíquia antiga!");
             Item tesouro = Item.itemAleatorio(2 + dado.nextInt(2)); // Épico ou Lendário
             jogador.getInventario().adicionarItem(tesouro);
-            System.out.println("🎁 Você ganhou: " + tesouro.getNome());
+            System.out.println("Você ganhou: " + tesouro.getNome());
         }
         pausar();
     }
 
     private void verificarProgressoTorre() {
         if (inimigosDerrotados >= 10 && !cristaisPurificados[2]) {
-            System.out.println("\n✨ VOCÊ ENCONTROU O CRISTAL DO FOGO! ✨");
+            System.out.println("\nVOCÊ ENCONTROU O CRISTAL DO FOGO!");
             System.out.println();
             System.out.println("O cristal arde em chamas negras...");
             System.out.println("Esta é a fonte do poder do Lorde das Sombras!");
             System.out.print("Pressione ENTER para purificar o cristal...");
             scanner.nextLine();
             
-            System.out.println("\n🌟 Você canaliza toda sua força!");
-            System.out.println("🌟 As chamas se transformam em luz dourada!");
-            System.out.println("🌟 O poder das sombras é banido!");
+            System.out.println("\nVocê canaliza toda sua força!");
+            System.out.println("As chamas se transformam em luz dourada!");
+            System.out.println("O poder das sombras é banido!");
             System.out.println();
-            System.out.println("✓ CRISTAL DO FOGO PURIFICADO!");
+            System.out.println("CRISTAL DO FOGO PURIFICADO!");
             
             cristaisPurificados[2] = true;
             capituloAtual++;
@@ -433,7 +433,7 @@ public class Jogo {
             // Recompensa
             try {
                 jogador.setDefesa((short)(jogador.getDefesa() + 3));
-                System.out.println("\n🎁 Sua defesa aumentou em 3!");
+                System.out.println("\nSua defesa aumentou em 3!");
             } catch (Exception e) {}
             
             verificarVitoria();
@@ -448,7 +448,7 @@ public class Jogo {
             System.out.println("║                          VITÓRIA!                             ║");
             System.out.println("╚═══════════════════════════════════════════════════════════════╝");
             System.out.println();
-            System.out.println("🌟🌟🌟 PARABÉNS! 🌟🌟🌟");
+            System.out.println("PARABÉNS!");
             System.out.println();
             System.out.println("Você purificou os três Cristais Ancestrais!");
             System.out.println();
@@ -475,7 +475,7 @@ public class Jogo {
 
     private void descansarNaVila() {
         limparTela();
-        System.out.println("🏠 VILA DE ELDORIA 🏠");
+        System.out.println("VILA DE ELDORIA");
         System.out.println("═══════════════════════════════════════");
         System.out.println();
         System.out.println("Você retorna à vila segura...");
@@ -486,7 +486,7 @@ public class Jogo {
         
         try {
             jogador.setPontosVida(jogador.getPontosVidaMaximo());
-            System.out.println("💚 Sua vida foi totalmente restaurada!");
+            System.out.println("Sua vida foi totalmente restaurada!");
         } catch (Exception e) {}
         
         pausar();
@@ -496,10 +496,10 @@ public class Jogo {
         try {
             savePoint = (Personagem) jogador.clone();
             limparTela();
-            System.out.println("💾 SAVE POINT CRIADO COM SUCESSO!");
+            System.out.println("SAVE POINT CRIADO COM SUCESSO!");
             System.out.println("\nSeu progresso foi salvo.");
         } catch (Exception e) {
-            System.out.println("❌ Erro ao criar save point!");
+            System.out.println("Erro ao criar save point!");
         }
         pausar();
     }
@@ -507,15 +507,15 @@ public class Jogo {
     private void carregarSavePoint() {
         if (savePoint == null) {
             limparTela();
-            System.out.println("❌ Nenhum save point encontrado!");
+            System.out.println("Nenhum save point encontrado!");
         } else {
             try {
                 jogador = (Personagem) savePoint.clone();
                 limparTela();
-                System.out.println("🔄 SAVE POINT CARREGADO!");
+                System.out.println("SAVE POINT CARREGADO!");
                 System.out.println("\nProgresso restaurado.");
             } catch (Exception e) {
-                System.out.println("❌ Erro ao carregar save point!");
+                System.out.println("Erro ao carregar save point!");
             }
         }
         pausar();
@@ -527,7 +527,7 @@ public class Jogo {
         System.out.println("║                         GAME OVER                             ║");
         System.out.println("╚═══════════════════════════════════════════════════════════════╝");
         System.out.println();
-        System.out.println("💀 Você foi derrotado...");
+        System.out.println("Você foi derrotado...");
         System.out.println();
         System.out.println("A escuridão prevalece sobre Eldoria.");
         System.out.println("Mas sua jornada não termina aqui...");
@@ -556,9 +556,9 @@ public class Jogo {
         System.out.println();
         System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
         System.out.println("PROGRESSO DA MISSÃO:");
-        System.out.println("  🌲 Cristal da Natureza: " + (cristaisPurificados[0] ? "✓ PURIFICADO" : "⚠ CORROMPIDO"));
-        System.out.println("  ❄️  Cristal da Água: " + (cristaisPurificados[1] ? "✓ PURIFICADO" : "⚠ CORROMPIDO"));
-        System.out.println("  🔥 Cristal do Fogo: " + (cristaisPurificados[2] ? "✓ PURIFICADO" : "⚠ CORROMPIDO"));
+        System.out.println("  Cristal da Natureza: " + (cristaisPurificados[0] ? "✓ PURIFICADO" : "⚠ CORROMPIDO"));
+        System.out.println("  Cristal da Água: " + (cristaisPurificados[1] ? "✓ PURIFICADO" : "⚠ CORROMPIDO"));
+        System.out.println("  Cristal do Fogo: " + (cristaisPurificados[2] ? "✓ PURIFICADO" : "⚠ CORROMPIDO"));
         System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
         System.out.println("  • Inimigos derrotados: " + inimigosDerrotados);
         System.out.println("  • Capítulo atual: " + capituloAtual);
@@ -582,7 +582,7 @@ public class Jogo {
         limparTela();
         System.out.println("Obrigado por jogar A LENDA DOS CRISTAIS ANCESTRAIS!");
         System.out.println();
-        System.out.println("Até a próxima aventura, herói! 🗡️");
+        System.out.println("Até a próxima aventura!");
         jogoAtivo = false;
     }
 
