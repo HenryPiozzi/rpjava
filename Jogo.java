@@ -228,7 +228,6 @@ public class Jogo {
             Inimigo inimigo = Inimigo.gerarInimigo(capituloAtual);
             System.out.println("Um " + inimigo.getNome() + " aparece do nada!");
             pausar();
-            
             try {
                 jogador.batalhar(inimigo);
                 
@@ -556,9 +555,9 @@ public class Jogo {
         System.out.println();
         System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
         System.out.println("PROGRESSO DA MISSÃO:");
-        System.out.println("  Cristal da Natureza: " + (cristaisPurificados[0] ? "✓ PURIFICADO" : "⚠ CORROMPIDO"));
-        System.out.println("  Cristal da Água: " + (cristaisPurificados[1] ? "✓ PURIFICADO" : "⚠ CORROMPIDO"));
-        System.out.println("  Cristal do Fogo: " + (cristaisPurificados[2] ? "✓ PURIFICADO" : "⚠ CORROMPIDO"));
+        System.out.println("  Cristal da Natureza: " + (cristaisPurificados[0] ? " PURIFICADO" : " CORROMPIDO"));
+        System.out.println("  Cristal da Água: " + (cristaisPurificados[1] ? " PURIFICADO" : " CORROMPIDO"));
+        System.out.println("  Cristal do Fogo: " + (cristaisPurificados[2] ? " PURIFICADO" : " CORROMPIDO"));
         System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
         System.out.println("  • Inimigos derrotados: " + inimigosDerrotados);
         System.out.println("  • Capítulo atual: " + capituloAtual);

@@ -35,9 +35,7 @@ public abstract class Personagem implements Cloneable {
         return this.nome;
     }
 
-    public void setPontosVida(short pontosVida) throws Exception {
-        if (pontosVida < 0)
-            throw new Exception("Pontos de vida inválidos");
+    public void setPontosVida(short pontosVida) {
         this.pontosVida = pontosVida;
     }
 
@@ -45,9 +43,7 @@ public abstract class Personagem implements Cloneable {
         return this.pontosVida;
     }
 
-    public void setPontosVidaMaximo(short pontosVidaMaximo) throws Exception {
-        if (pontosVidaMaximo < 1)
-            throw new Exception("Pontos de vida máxima inválidos");
+    public void setPontosVidaMaximo(short pontosVidaMaximo) {
         this.pontosVidaMaximo = pontosVidaMaximo;
     }
 
@@ -174,9 +170,6 @@ public abstract class Personagem implements Cloneable {
                 }
                 default -> System.out.println("\nEscolha inválida!");
             }
-
-            System.out.println(inimigo);
-
             if (inimigo.getPontosVida() <= 0) {
                 System.out.println("\n════════════════════════════════════════════════════════");
                 System.out.println("           VITÓRIA! Você derrotou " + inimigo.getNome());
