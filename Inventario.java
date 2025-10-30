@@ -34,11 +34,6 @@ public class Inventario {
             if (i.getNome().equalsIgnoreCase(nome.trim())) {
                 if (i.getQuantidade() > 0) {
                     return i.usar();
-                    // i.setQuantidade((byte) (i.getQuantidade() - 1));
-                    // System.out.println("Você usou: " + i.getNome() + " | Restante: " + i.getQuantidade());
-                    // if (i.getQuantidade() <= 0) {
-                    //     itens.remove(idx);
-                    // }
                 } else {
                     System.out.println("Você não tem mais " + i.getNome());
                     return new String[]{"", "0"};

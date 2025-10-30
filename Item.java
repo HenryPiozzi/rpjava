@@ -8,19 +8,19 @@ public class Item implements Comparable<Item> {
     private byte quantidade;
 
     private static final Item[] ITEM_COMUM = {
-        new Item("Poção de Vida pequena", "Recupera 30% de HP", "Cura", "30", (byte) 1),
-        new Item("Poção de Ataque", "Causa X de dano a mais no proximo ataque", "Dano bônus", "5", (byte) 1),
+        new Item("Pocao de Vida pequena", "Recupera 30% de HP", "Cura", "30", (byte) 1),
+        new Item("Pocao de Ataque", "Causa X de dano a mais no proximo ataque", "Dano bônus", "5", (byte) 1),
     };
 
     private static final Item[] ITEM_RARO = {
-        new Item("Poção Média de Vida", "Recupera 50% de HP", "Cura", "50", (byte) 1),
+        new Item("Pocao Media de Vida", "Recupera 50% de HP", "Cura", "50", (byte) 1),
         new Item("Amuleto Raro", "Aumenta 10% da defesa", "Defesa bônus", "3", (byte) 1),
-        new Item("Elixir da Fúria", "Aumenta drasticamente o ataque no próximo turno", "Dano bônus", "8", (byte) 1)
+        new Item("Elixir da Furia", "Aumenta drasticamente o ataque no próximo turno", "Dano bônus", "8", (byte) 1)
     };
 
     private static final Item[] ITEM_EPICO = {
-        new Item("Essência do Berserker", "Aumenta ataque e defesa simultaneamente por 2 turnos", "Duplo bônus", "5",(byte) 1),
-        new Item("Poção Grande de Vida", "Recupera 75% de HP", "Cura", "75", (byte) 1)
+        new Item("Essencia do Berserker", "Aumenta ataque e defesa simultaneamente por 2 turnos", "Duplo bônus", "5",(byte) 1),
+        new Item("Pocao Grande de Vida", "Recupera 75% de HP", "Cura", "75", (byte) 1)
     };
 
     private static final Item[] ITEM_LENDARIO = {
