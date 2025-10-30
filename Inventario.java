@@ -13,14 +13,14 @@ public class Inventario {
     public Inventario(Inventario modelo) {
         this.itens = new ArrayList<>();
         for (Item i : modelo.itens) {
-            Item novoItem = new Item(i.getNome(), i.getDescricao(), i.getEfeito(), i.getQuantidade());
+            Item novoItem = new Item(i.nome, i.descricao, i.efeito, i.potencia, i.quantidade);
             this.itens.add(novoItem);
         }
     }
 
     public void adicionarItem(Item item) {
         for (Item i : itens) {
-            if (i.getNome().equals(item.getNome())) {
+            if (i.nome.equals(item.nome)) {
                 i.setQuantidade((byte) (i.getQuantidade() + item.getQuantidade()));
                 return;
             }
@@ -31,13 +31,14 @@ public class Inventario {
     public boolean usarItem(String nome) {
         for (int idx = 0; idx < itens.size(); idx++) {
             Item i = itens.get(idx);
-            if (i.getNome().equalsIgnoreCase(nome.trim())) {
-                if (i.getQuantidade() > 0) {
-                    i.setQuantidade((byte) (i.getQuantidade() - 1));
-                    System.out.println("Você usou: " + i.getNome() + " | Restante: " + i.getQuantidade());
-                    if (i.getQuantidade() <= 0) {
-                        itens.remove(idx);
-                    }
+            if (i.nome.equalsIgnoreCase(nome.trim())) {
+                if (i.quantidade > 0) {
+                    i.usarItem();
+                    // i.setQuantidade((byte) (i.getQuantidade() - 1));
+                    // System.out.println("Você usou: " + i.getNome() + " | Restante: " + i.getQuantidade());
+                    // if (i.getQuantidade() <= 0) {
+                    //     itens.remove(idx);
+                    // }
                     return true;
                 } else {
                     System.out.println("Você não tem mais " + i.getNome());
@@ -59,7 +60,7 @@ public class Inventario {
         System.out.println("╚═══════════════════════════════════════════════════════════════╝");
         System.out.println();
         for (Item i : itens) {
-            System.out.println("  🎒 " + i.getNome() + " (x" + i.getQuantidade() + ")");
+            System.out.println(i.getNome() + " (x" + i.getQuantidade() + ")");
             System.out.println("     " + i.getDescricao());
             System.out.println();
         }
@@ -73,7 +74,7 @@ public class Inventario {
     public Inventario clone() {
         Inventario clone = new Inventario();
         for (Item i : this.itens) {
-            Item novoItem = new Item(i.getNome(), i.getDescricao(), i.getEfeito(), i.getQuantidade());
+            Item novoItem = new Item(i.getNome(), i.getDescricao(), i.getEfeito(), i.getPotencia() i.getQuantidade());
             clone.itens.add(novoItem);
         }
         return clone;

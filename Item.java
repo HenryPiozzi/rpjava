@@ -4,31 +4,29 @@ public class Item implements Comparable<Item> {
     private String nome;
     private String descricao;
     private String efeito;
+    private String potencia;
     private byte quantidade;
 
     private static final Item[] ITEM_COMUM = {
-        new Item("Poção de Vida pequena", "Recupera 30% de HP", "Cura", (byte) 1),
-        new Item("Poção de Ataque", "Causa X de dano a mais no proximo ataque", "Dano bônus", (byte) 1),
-        new Item("Pedra Pequena", "Uma pedra comum, pode ser jogada em inimigos", "Dano leve", (byte) 1)
+        new Item("Poção de Vida pequena", "Recupera 30% de HP", "Cura", "30", (byte) 1),
+        new Item("Poção de Ataque", "Causa X de dano a mais no proximo ataque", "Dano bônus", "5", (byte) 1),
     };
 
     private static final Item[] ITEM_RARO = {
-        new Item("Poção Média de Vida", "Recupera 50% de HP", "Cura", (byte) 1),
-        new Item("Bomba de Fogo", "Causa dano de fogo", "Explosão", (byte) 1),
-        new Item("Amuleto Raro", "Aumenta 10% da defesa", "Buff de defesa", (byte) 1),
-        new Item("Elixir da Fúria", "Aumenta drasticamente o ataque no próximo turno", "Buff de ataque", (byte) 1)
+        new Item("Poção Média de Vida", "Recupera 50% de HP", "Cura", "50", (byte) 1),
+        new Item("Amuleto Raro", "Aumenta 10% da defesa", "Defesa bônus", "3", (byte) 1),
+        new Item("Elixir da Fúria", "Aumenta drasticamente o ataque no próximo turno", "Dano bônus", "8", (byte) 1)
     };
 
     private static final Item[] ITEM_EPICO = {
-        new Item("Essência do Berserker", "Aumenta ataque e defesa simultaneamente por 2 turnos", "Buff duplo", (byte) 1),
-        new Item("Anel da Sabedoria", "Aumenta inteligência em 20", "Buff", (byte) 1),
-        new Item("Poção Grande de Vida", "Recupera 75% de HP", "Cura", (byte) 1)
+        new Item("Essência do Berserker", "Aumenta ataque e defesa simultaneamente por 2 turnos", "Duplo bônus", "5",(byte) 1),
+        new Item("Poção Grande de Vida", "Recupera 75% de HP", "Cura", "75", (byte) 1)
     };
 
     private static final Item[] ITEM_LENDARIO = {
-        new Item("Excalibur", "A lendária espada sagrada", "Dano massivo", (byte) 1),
-        new Item("Elixir dos Deuses", "Recupera todo HP", "Cura total", (byte) 1),
-        new Item("Capa da Invisibilidade", "Não recebe o próximo ataque", "Invisibilidade", (byte) 1)
+        new Item("Excalibur", "A lendária espada sagrada", "Dano bônus", "15", (byte) 1),
+        new Item("Elixir dos Deuses", "Recupera todo HP", "Cura", "100", (byte) 1),
+        new Item("Capa da Invisibilidade", "Não recebe o próximo ataque", "Defesa bônus", "999", (byte) 1)
     };
 
     public static Item itemAleatorio(int nivelDoItem) {
@@ -46,10 +44,11 @@ public class Item implements Comparable<Item> {
         }
     }
 
-    public Item(String nome, String descricao, String efeito, byte quantidade) {
+    public Item(String nome, String descricao, String efeito, String potencia, byte quantidade) {
         this.nome = nome;
         this.descricao = descricao;
         this.efeito = efeito;
+        this.potencia = potencia 
         this.quantidade = quantidade;
     }
 
@@ -58,6 +57,7 @@ public class Item implements Comparable<Item> {
         this.nome = modelo.nome;
         this.descricao = modelo.descricao;
         this.efeito = modelo.efeito;
+        this.potencia = modelo.potencia;
         this.quantidade = modelo.quantidade;
     }
 
@@ -85,6 +85,14 @@ public class Item implements Comparable<Item> {
         this.efeito = efeito;
     }
 
+    public String getPotencia() {
+        return this.efeito;
+    }
+
+    public void setPotencia(String potencia) {
+        this.potencia = potencia;
+    }
+
     public byte getQuantidade() {
         return this.quantidade;
     }
@@ -103,10 +111,10 @@ public class Item implements Comparable<Item> {
         }
     }
 
-    public boolean usar() {
+    public String[] usar() {
         if (this.quantidade > 0) {
             this.quantidade--;
-            return true;
+            return [this.efeito, this.potencia];
         }
         return false;
     }
@@ -117,6 +125,7 @@ public class Item implements Comparable<Item> {
                 "nome='" + nome + '\'' +
                 ", descricao='" + descricao + '\'' +
                 ", efeito='" + efeito + '\'' +
+                ", potencia='" + potencia + '\'' +
                 ", quantidade=" + quantidade +
                 '}';
     }
@@ -128,6 +137,7 @@ public class Item implements Comparable<Item> {
         if (getClass() != o.getClass()) return false;
         Item item = (Item) o;
         if (this.quantidade != item.quantidade) return false;
+        if (this.potencia != null ? !this.potencia.equals(item.potencia) : item.potencia != null) return false;
         if (this.nome != null ? !this.nome.equals(item.nome) : item.nome != null) return false;
         if (this.descricao != null ? !this.descricao.equals(item.descricao) : item.descricao != null) return false;
         return efeito != null ? efeito.equals(item.efeito) : item.efeito == null;
@@ -140,6 +150,7 @@ public class Item implements Comparable<Item> {
         result = 31 * result + (descricao != null ? descricao.hashCode() : 0);
         result = 31 * result + (efeito != null ? efeito.hashCode() : 0);
         result = 31 * result + Byte.hashCode(quantidade);
+        result = 31 * result + (potencia != null ? potencia.hashCode() : 0);
         return result;
     }
 
@@ -149,6 +160,8 @@ public class Item implements Comparable<Item> {
         int cmp = compareNullable(this.nome, other.nome);
         if (cmp != 0) return cmp;
         cmp = Byte.compare(this.quantidade, other.quantidade);
+        if (cmp != 0) return cmp;
+        cmp = compareNullable(this.potencia, other.potencia);
         if (cmp != 0) return cmp;
         cmp = compareNullable(this.efeito, other.efeito);
         if (cmp != 0) return cmp;
