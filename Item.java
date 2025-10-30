@@ -48,7 +48,7 @@ public class Item implements Comparable<Item> {
         this.nome = nome;
         this.descricao = descricao;
         this.efeito = efeito;
-        this.potencia = potencia 
+        this.potencia = potencia;
         this.quantidade = quantidade;
     }
 
@@ -86,7 +86,7 @@ public class Item implements Comparable<Item> {
     }
 
     public String getPotencia() {
-        return this.efeito;
+        return this.potencia;
     }
 
     public void setPotencia(String potencia) {
@@ -114,9 +114,9 @@ public class Item implements Comparable<Item> {
     public String[] usar() {
         if (this.quantidade > 0) {
             this.quantidade--;
-            return [this.efeito, this.potencia];
+            return new String[]{this.efeito, this.potencia};
         }
-        return false;
+        return new String[]{"", "0"};
     }
 
     @Override

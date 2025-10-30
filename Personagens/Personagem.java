@@ -189,7 +189,7 @@ public abstract class Personagem implements Cloneable {
             }
 
             if (this.pontosVida <= 0) {
-                System.out.println("\n" this.nome + " foi derrotado!");
+                System.out.println("\n"+ this.nome + " foi derrotado!");
                 break;
             }
         }
@@ -250,89 +250,37 @@ public abstract class Personagem implements Cloneable {
             return;
         }
 
-        Item itemUsado = null;
-        for (Item i : this.getInventario().getItens()) {
-            if (i.getNome().equalsIgnoreCase(nomeItem)) {
-                itemUsado = new Item(i);
-                break;
-            }
-        }
-
-        boolean usandoItem = this.getInventario().usarItem(nomeItem);
-
-        if (usandoItem && itemUsado != null) {
-            System.out.println("\nVocê usou " + itemUsado.nome + "!");
-            aplicarEfeitoTemporario(itemUsado);
-        } else {
-            System.out.println("\nItem não encontrado ou sem quantidade!");
-        }
+        aplicarEfeitoTemporario(inventario.usarItem(nomeItem));
+        return;
     }
 
-    private void aplicarEfeitoTemporario(Item item) {
-        String nomeItem = item.nome.toLowerCase();
+    private void aplicarEfeitoTemporario(String[] efeitos) {
 
-        try {
-            switch (nomeItem) {
-                case "poção de vida pequena" -> {
-                    short cura = (short) (this.pontosVidaMaximo * 0.3);
-                    this.pontosVida += cura;
-                    if (this.pontosVida > this.pontosVidaMaximo)
-                        this.pontosVida = this.pontosVidaMaximo;
-                    System.out.println("Você recuperou " + cura + " de HP!");
-                }
-                case "poção média de vida" -> {
-                    short cura = (short) (this.pontosVidaMaximo * 0.5);
-                    this.pontosVida += cura;
-                    if (this.pontosVida > this.pontosVidaMaximo)
-                        this.pontosVida = this.pontosVidaMaximo;
-                    System.out.println("Você recuperou " + cura + " de HP!");
-                }
-                case "poção grande de vida" -> {
-                    short cura = (short) (this.pontosVidaMaximo * 0.75);
-                    this.pontosVida += cura;
-                    if (this.pontosVida > this.pontosVidaMaximo)
-                        this.pontosVida = this.pontosVidaMaximo;
-                    System.out.println("Você recuperou " + cura + " de HP!");
-                }
-                case "elixir dos deuses" -> {
+        switch (efeitos[0].toLowerCase()) {
+            case "cura" -> {
+                short cura = (short) (this.pontosVidaMaximo * (Short.parseShort(efeitos[1])/100.0));
+                this.pontosVida += cura;
+                if (this.pontosVida > this.pontosVidaMaximo)
                     this.pontosVida = this.pontosVidaMaximo;
-                    System.out.println("Vida totalmente restaurada!");
-                }
-                case "poção de ataque" -> {
-                    this.bonusAtaqueTemporario = 5;
-                    this.efeitoAtivo = true;
-                    System.out.println("Seu ataque aumentou temporariamente!");
-                }
-                case "amuleto raro" -> {
-                    this.bonusDefesaTemporario = 3;
-                    this.efeitoAtivo = true;
-                    System.out.println("Sua defesa aumentou temporariamente!");
-                }
-                case "elixir da fúria" -> {
-                    this.bonusAtaqueTemporario = 8;
-                    this.efeitoAtivo = true;
-                    System.out.println("Você sente uma fúria incontrolável! Seu ataque explodiu!");
-                }
-                case "essência do berserker" -> {
-                    this.bonusAtaqueTemporario = 6;
-                    this.bonusDefesaTemporario = 4;
-                    this.efeitoAtivo = true;
-                    System.out.println("MODO BERSERKER ATIVADO! Ataque e Defesa aumentados!");
-                }
-                case "excalibur" -> {
-                    this.bonusAtaqueTemporario = 15;
-                    this.efeitoAtivo = true;
-                    System.out.println("Poder da Excalibur ativado!");
-                }
-                case "capa da invisibilidade" -> {
-                    this.bonusDefesaTemporario = 9999;
-                    this.efeitoAtivo = true;
-                    System.out.println("Você está coberto pela capa da invisibilidade! desviará garantido do proximo golpe!");
-                }
-                default -> System.out.println("O item não causou efeito em batalha.");
+                System.out.println("Você recuperou " + cura + " de HP!");
             }
-        } catch (Exception e) {
-            System.out.println("Erro ao aplicar efeito!");
+            case "dano bônus" -> {
+                this.bonusAtaqueTemporario = Short.parseShort(efeitos[1]);
+                this.efeitoAtivo = true;
+                System.out.println("Seu ataque aumentou temporariamente em " + efeitos[1] + "!");
+            }
+            case "defesa bônus" -> {
+                this.bonusDefesaTemporario = Short.parseShort(efeitos[1]);
+                this.efeitoAtivo = true;
+                System.out.println("Sua defesa aumentou temporariamente em " + efeitos[1] + "!");
+            }
+            case "duplo bônus" -> {
+                this.bonusAtaqueTemporario = Short.parseShort(efeitos[1]);
+                this.bonusDefesaTemporario = Short.parseShort(efeitos[1]);
+                this.efeitoAtivo = true;
+                System.out.println("MODO BERSERKER ATIVADO! Ataque e Defesa aumentados em " + efeitos[1] + "!");
+            }
+            default -> System.out.println("O item não causou efeito em batalha.");
         }
     }
 
@@ -440,7 +388,7 @@ public abstract class Personagem implements Cloneable {
 
         ret = ret * 13 + this.nome.hashCode();
         ret = ret * 13 + ((Short)this.pontosVida).hashCode();
-        ret = ret * 13 + ((Short)this.pontosVidaMaximoo).hashCode();
+        ret = ret * 13 + ((Short)this.pontosVidaMaximo).hashCode();
         ret = ret * 13 + ((Short)this.ataque).hashCode();
         ret = ret * 13 + ((Short)this.defesa).hashCode();
         ret = ret * 13 + ((Short)this.bonusDefesaTemporario).hashCode();

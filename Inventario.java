@@ -28,26 +28,25 @@ public class Inventario {
         itens.add(item);
     }
 
-    public boolean usarItem(String nome) {
+    public String[] usarItem(String nome) {
         for (int idx = 0; idx < itens.size(); idx++) {
             Item i = itens.get(idx);
             if (i.nome.equalsIgnoreCase(nome.trim())) {
                 if (i.quantidade > 0) {
-                    i.usarItem();
+                    return i.usar();
                     // i.setQuantidade((byte) (i.getQuantidade() - 1));
                     // System.out.println("Você usou: " + i.getNome() + " | Restante: " + i.getQuantidade());
                     // if (i.getQuantidade() <= 0) {
                     //     itens.remove(idx);
                     // }
-                    return true;
                 } else {
                     System.out.println("Você não tem mais " + i.getNome());
-                    return false;
+                    return new String[]{"", "0"};
                 }
             }
         }
         System.out.println("Item não encontrado no inventário.");
-        return false;
+        return new String[]{"", "0"};
     }
 
     public void listarItens() {
@@ -74,7 +73,7 @@ public class Inventario {
     public Inventario clone() {
         Inventario clone = new Inventario();
         for (Item i : this.itens) {
-            Item novoItem = new Item(i.getNome(), i.getDescricao(), i.getEfeito(), i.getPotencia() i.getQuantidade());
+            Item novoItem = new Item(i.getNome(), i.getDescricao(), i.getEfeito(), i.getPotencia(), i.getQuantidade());
             clone.itens.add(novoItem);
         }
         return clone;
