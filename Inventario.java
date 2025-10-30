@@ -13,7 +13,7 @@ public class Inventario {
     public Inventario(Inventario modelo) {
         this.itens = new ArrayList<>();
         for (Item i : modelo.itens) {
-            Item novoItem = new Item(i.nome, i.descricao, i.efeito, i.potencia, i.quantidade);
+            Item novoItem = new Item(i.getNome(), i.getDescricao(), i.getEfeito(), i.getPotencia(), i.getQuantidade());
             this.itens.add(novoItem);
         }
     }
