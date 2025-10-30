@@ -1,4 +1,6 @@
-public class Arqueiro extends Personagem  implements Cloneable {
+package personagem;
+
+ class Arqueiro extends Personagem  implements Cloneable {
 
     public Arqueiro(String nome) throws Exception {
         super(nome, (short)20, (short)4, (short)4, (byte)1, new Inventario());

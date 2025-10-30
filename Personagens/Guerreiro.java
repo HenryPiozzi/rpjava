@@ -1,3 +1,5 @@
+package personagem;
+
 public class Guerreiro extends Personagem  implements  Cloneable {
 
     public Guerreiro(String nome) throws Exception {

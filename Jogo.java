@@ -1,3 +1,5 @@
+import Personagens.*;
+
 import java.util.Scanner;
 import java.util.Random;
 

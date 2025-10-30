@@ -1,3 +1,5 @@
+package personagem;
+
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Inimigo extends Personagem implements Cloneable {

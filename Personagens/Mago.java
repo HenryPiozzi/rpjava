@@ -1,3 +1,5 @@
+package personagem;
+
 public class Mago extends Personagem implements Cloneable {
 
     public Mago(String nome) throws Exception {
