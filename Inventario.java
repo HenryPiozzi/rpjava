@@ -20,7 +20,7 @@ public class Inventario {
 
     public void adicionarItem(Item item) {
         for (Item i : itens) {
-            if (i.nome.equals(item.nome)) {
+            if (i.getNome().equals(item.getNome())) {
                 i.setQuantidade((byte) (i.getQuantidade() + item.getQuantidade()));
                 return;
             }
@@ -31,8 +31,8 @@ public class Inventario {
     public String[] usarItem(String nome) {
         for (int idx = 0; idx < itens.size(); idx++) {
             Item i = itens.get(idx);
-            if (i.nome.equalsIgnoreCase(nome.trim())) {
-                if (i.quantidade > 0) {
+            if (i.getNome().equalsIgnoreCase(nome.trim())) {
+                if (i.getQuantidade() > 0) {
                     return i.usar();
                     // i.setQuantidade((byte) (i.getQuantidade() - 1));
                     // System.out.println("Você usou: " + i.getNome() + " | Restante: " + i.getQuantidade());

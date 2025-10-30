@@ -175,13 +175,15 @@ public abstract class Personagem implements Cloneable {
                 default -> System.out.println("\nEscolha inválida!");
             }
 
+            System.out.println(inimigo);
+
             if (inimigo.getPontosVida() <= 0) {
                 System.out.println("\n════════════════════════════════════════════════════════");
                 System.out.println("           VITÓRIA! Você derrotou " + inimigo.getNome());
                 System.out.println("════════════════════════════════════════════════════════");
                 
                 Item itemDropado = Item.itemAleatorio(random.nextInt(4));
-                System.out.println("\nItem dropado: " + itemDropado.nome + "!");
+                System.out.println("\nItem dropado: " + itemDropado.getNome() + "!");
                 this.inventario.adicionarItem(itemDropado);
 
                 uparNivel();
@@ -202,8 +204,8 @@ public abstract class Personagem implements Cloneable {
         short ataqueJogador = (short) (this.ataque + this.bonusAtaqueTemporario + jogadorDado);
         short ataqueInimigo = (short) (inimigo.getAtaque() + inimigoDado);
 
-        System.out.println("\n" + this.nome + " rolou " + jogadorDado + " → Ataque total: " + ataqueJogador);
-        System.out.println(inimigo.getNome() + " rolou " + inimigoDado + " → Ataque total: " + ataqueInimigo);
+        System.out.println("\n" + this.nome + " rolou " + jogadorDado + " Ataque total: " + ataqueJogador);
+        System.out.println(inimigo.getNome() + " rolou " + inimigoDado + " Ataque total: " + ataqueInimigo);
         System.out.println();
 
         if(ataqueJogador > inimigo.getDefesa()) {
@@ -256,6 +258,7 @@ public abstract class Personagem implements Cloneable {
 
     private void aplicarEfeitoTemporario(String[] efeitos) {
 
+        System.out.println(efeitos[0] + efeitos[1]);
         switch (efeitos[0].toLowerCase()) {
             case "cura" -> {
                 short cura = (short) (this.pontosVidaMaximo * (Short.parseShort(efeitos[1])/100.0));
