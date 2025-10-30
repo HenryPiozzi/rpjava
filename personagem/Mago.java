@@ -1,5 +1,4 @@
 package personagem;
-import item.Inventario;
 
 public class Mago extends Personagem implements Cloneable {
 

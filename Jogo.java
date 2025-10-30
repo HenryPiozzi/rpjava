@@ -1,8 +1,5 @@
-import personagem.*;
-
 import java.util.Scanner;
 import java.util.Random;
-import item.Item;
 
 public class Jogo {
     private Personagem jogador;

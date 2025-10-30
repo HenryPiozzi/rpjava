@@ -1,8 +1,7 @@
 package personagem;
+
 import java.util.Scanner;
 import java.util.Random;
-import item.Inventario;
-import inimigo.Inimigo;
 
 public abstract class Personagem implements Cloneable {
 
