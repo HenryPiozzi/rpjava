@@ -6,7 +6,7 @@ public class Jogo {
     private Scanner scanner;
     private boolean jogoAtivo;
     private byte capituloAtual;
-    private short inimigosDerrotados;
+    private byte inimigosDerrotados;
     private Random dado;
     private boolean[] cristaisPurificados;
     private boolean introducaoMostrada;
@@ -35,7 +35,7 @@ public class Jogo {
         System.out.println("║          A LENDA DOS CRISTAIS ANCESTRAIS                      ║");
         System.out.println("╚═══════════════════════════════════════════════════════════════╝");
         System.out.println();
-        System.out.println("O reino de Eldoria sempre viveu em paz, protegido por três");
+        System.out.println("O reino de Cristalios sempre viveu em paz, protegido por três");
         System.out.println("cristais ancestrais que mantinham o equilíbrio do mundo.");
         System.out.println();
         System.out.println("Mas tudo mudou quando o Lorde das Sombras despertou...");
@@ -84,15 +84,15 @@ public class Jogo {
                 switch (opcao) {
                     case 1 -> {
                         jogador = new Guerreiro("Guerreiro");
-                        System.out.println("\n✓ Você escolheu o caminho do Guerreiro!");
+                        System.out.println("\nVocê escolheu o caminho do Guerreiro!");
                     }
                     case 2 -> {
                         jogador = new Mago("Mago");
-                        System.out.println("\n✓ Você escolheu o caminho do Mago!");
+                        System.out.println("\nVocê escolheu o caminho do Mago!");
                     }
                     case 3 -> {
                         jogador = new Arqueiro("Arqueiro");
-                        System.out.println("\n✓ Você escolheu o caminho do Arqueiro!");
+                        System.out.println("\nVocê escolheu o caminho do Arqueiro!");
                     }
                     default -> {
                         System.out.print("Opção inválida! Escolha 1, 2 ou 3: ");
@@ -109,7 +109,7 @@ public class Jogo {
     }
 
     private void darItensIniciais() {
-        Item pocaoVida = new Item("Poção de Vida pequena", "Recupera 30% de HP", "Cura", (byte)3);
+        Item pocaoVida = new Item("Poção de Vida pequena", "Recupera 30% de HP", "Cura", "30", (byte)3);
         jogador.getInventario().adicionarItem(pocaoVida);
         System.out.println("\nVocê recebeu 3x Poções de Vida pequena!");
         pausar();
@@ -175,9 +175,9 @@ public class Jogo {
         System.out.println("Para onde deseja ir?");
         System.out.println();
         
-        String statusFloresta = cristaisPurificados[0] ? "✓ PURIFICADO" : "⚠ CORROMPIDO";
-        String statusCavernas = cristaisPurificados[1] ? "✓ PURIFICADO" : "⚠ CORROMPIDO";
-        String statusTorre = cristaisPurificados[2] ? "✓ PURIFICADO" : "⚠ CORROMPIDO";
+        String statusFloresta = cristaisPurificados[0] ? "PURIFICADO" : "CORROMPIDO";
+        String statusCavernas = cristaisPurificados[1] ? "PURIFICADO" : "CORROMPIDO";
+        String statusTorre = cristaisPurificados[2] ? "PURIFICADO" : "CORROMPIDO";
         
         System.out.println("1 - Floresta Sombria [" + statusFloresta + "]");
         System.out.println("2 - Cavernas de Gelo [" + statusCavernas + "]");
