@@ -1,4 +1,5 @@
 package personagem;
+import personagem.Inventario;
 
 import java.util.concurrent.ThreadLocalRandom;
 
