@@ -109,7 +109,7 @@ public class Jogo {
     }
 
     private void darItensIniciais() {
-        Item pocaoVida = new Item("Poção de Vida pequena", "Recupera 30% de HP", "Cura", "30", (byte)3);
+        Item pocaoVida = new Item("Pocao de Vida pequena", "Recupera 30% de HP", "Cura", "30", (byte)3);
         jogador.getInventario().adicionarItem(pocaoVida);
         System.out.println("\nVocê recebeu 3x Poções de Vida pequena!");
         pausar();
@@ -454,7 +454,7 @@ public class Jogo {
             System.out.println("Com o poder dos cristais restaurado, a escuridão se dissipa.");
             System.out.println("O Lorde das Sombras foi banido para sempre!");
             System.out.println();
-            System.out.println("O reino de Eldoria está salvo graças à sua coragem!");
+            System.out.println("O reino de Cristalios está salvo graças à sua coragem!");
             System.out.println("Seu nome será lembrado para sempre como o herói que");
             System.out.println("restaurou a paz e a luz ao mundo!");
             System.out.println();
@@ -474,7 +474,7 @@ public class Jogo {
 
     private void descansarNaVila() {
         limparTela();
-        System.out.println("VILA DE ELDORIA");
+        System.out.println("VILA DE CRISTALIOS");
         System.out.println("═══════════════════════════════════════");
         System.out.println();
         System.out.println("Você retorna à vila segura...");
@@ -528,7 +528,7 @@ public class Jogo {
         System.out.println();
         System.out.println("Você foi derrotado...");
         System.out.println();
-        System.out.println("A escuridão prevalece sobre Eldoria.");
+        System.out.println("A escuridão prevalece sobre Cristalios.");
         System.out.println("Mas sua jornada não termina aqui...");
         System.out.println();
         

@@ -180,6 +180,11 @@ public abstract class Personagem implements Cloneable {
                 this.inventario.adicionarItem(itemDropado);
 
                 uparNivel();
+
+                if (this.nivel < inimigo.getNivel()) {
+                    uparNivel();
+                }
+
                 break;
             }
 
@@ -195,6 +200,7 @@ public abstract class Personagem implements Cloneable {
         short inimigoDado = (short) (random.nextInt(6) + 1);
 
         short ataqueJogador = (short) (this.ataque + this.bonusAtaqueTemporario + jogadorDado);
+        short defesaJogador = (short) (this.defesa + this.bonusDefesaTemporario);
         short ataqueInimigo = (short) (inimigo.getAtaque() + inimigoDado);
 
         System.out.println("\n" + this.nome + " rolou " + jogadorDado + " Ataque total: " + ataqueJogador);
@@ -211,8 +217,8 @@ public abstract class Personagem implements Cloneable {
             System.out.println(inimigo.getNome() + " defendeu o ataque!");
         }
 
-        if(ataqueInimigo > this.defesa) {
-            short danoInimigo = (short) (ataqueInimigo - (this.defesa + this.bonusDefesaTemporario));
+        if(ataqueInimigo > defesaJogador) {
+            short danoInimigo = (short) (ataqueInimigo - (defesaJogador));
             this.setPontosVida((short) (this.pontosVida - danoInimigo));
 
             System.out.println("Inimigo deu " + danoInimigo + " de dano!");
@@ -250,8 +256,6 @@ public abstract class Personagem implements Cloneable {
     }
 
     private void aplicarEfeitoTemporario(String[] efeitos) {
-
-        System.out.println(efeitos[0] + efeitos[1]);
         switch (efeitos[0].toLowerCase()) {
             case "cura" -> {
                 short cura = (short) (this.pontosVidaMaximo * (Short.parseShort(efeitos[1])/100.0));
