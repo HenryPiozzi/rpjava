@@ -11,20 +11,14 @@ public abstract class Personagem implements Cloneable {
 
     protected Scanner scanner = new Scanner(System.in);
 
-    public Personagem(String nome, short pontosVida, short ataque, short defesa, byte nivel, Inventario inventario) throws Exception {
-        if (nome == null || nome.trim().isEmpty()) throw new Exception("Nome inválido");
-        if (pontosVida < 1) throw new Exception("Pontos de vida inválidos");
-        if (ataque < 0) throw new Exception("Ataque inválido");
-        if (defesa < 0) throw new Exception("Defesa inválida");
-        if (nivel < 1) throw new Exception("Nível inválido");
-        
+    public Personagem(String nome, short pontosVida, short ataque, short defesa, byte nivel, Inventario inventario) {
         this.nome = nome;
         this.pontosVida = pontosVida;
         this.pontosVidaMaximo = pontosVida;
         this.ataque = ataque;
         this.defesa = defesa;
         this.nivel = nivel;
-        this.inventario = inventario != null ? new Inventario(inventario) : new Inventario();
+        this.inventario = new Inventario(inventario);
 
         this.bonusAtaqueTemporario = 0;
         this.bonusDefesaTemporario = 0;
@@ -101,6 +95,39 @@ public abstract class Personagem implements Cloneable {
         return this.inventario;
     }
 
+    public short getBonusAtaqueTemporario() {
+        return bonusAtaqueTemporario;
+    }
+
+    public void setBonusAtaqueTemporario(short bonusAtaqueTemporario) throws Exception {
+        if (bonusAtaqueTemporario < 0) {
+            throw new Exception("O bônus de ataque temporário não pode ser negativo.");
+        }
+        this.bonusAtaqueTemporario = bonusAtaqueTemporario;
+    }
+
+    public short getBonusDefesaTemporario() {
+        return bonusDefesaTemporario;
+    }
+
+    public void setBonusDefesaTemporario(short bonusDefesaTemporario) throws Exception {
+        if (bonusDefesaTemporario < 0) {
+            throw new Exception("O bônus de defesa temporário não pode ser negativo.");
+        }
+        this.bonusDefesaTemporario = bonusDefesaTemporario;
+    }
+
+    public boolean isEfeitoAtivo() {
+        return efeitoAtivo;
+    }
+
+    public void setEfeitoAtivo(boolean efeitoAtivo) throws Exception {
+        if (this.efeitoAtivo && efeitoAtivo) {
+            throw new Exception("O efeito já está ativo.");
+        }
+        this.efeitoAtivo = efeitoAtivo;
+    }
+
     public void batalhar(Inimigo inimigo) throws Exception {
         Random random = new Random();
 
@@ -108,20 +135,20 @@ public abstract class Personagem implements Cloneable {
         System.out.println("║                      BATALHA INICIADA!                        ║");
         System.out.println("╚═══════════════════════════════════════════════════════════════╝");
         System.out.println();
-        System.out.println("⚔️  " + this.nome + " VS " + inimigo.getNome() + " 💀");
+        System.out.println(this.nome + " VS " + inimigo.nome);
         System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
         System.out.println();
 
-        while(this.pontosVida > 0 && inimigo.getPontosVida() > 0) {
+        while(this.pontosVida > 0 && inimigo.pontosVida > 0) {
             System.out.println("\n┌─────────────────────────────────────────────────────────────┐");
             System.out.println("│ HP Jogador: " + this.pontosVida + "/" + this.pontosVidaMaximo + 
-                             " | HP Inimigo: " + inimigo.getPontosVida() + "       ");
+                             " | HP Inimigo: " + inimigo.pontosVida + "       ");
             System.out.println("└─────────────────────────────────────────────────────────────┘");
             System.out.println();
             System.out.println("O que deseja fazer?");
-            System.out.println("  1) ⚔️  Atacar");
-            System.out.println("  2) 🎒 Usar Item");
-            System.out.println("  3) 🏃 Fugir");
+            System.out.println("  1) Atacar");
+            System.out.println("  2) Usar Item");
+            System.out.println("  3) Fugir");
             System.out.print("\nEscolha: ");
 
             byte escolha = -1;
@@ -145,16 +172,16 @@ public abstract class Personagem implements Cloneable {
                         return;
                     }
                 }
-                default -> System.out.println("\n❌ Escolha inválida!");
+                default -> System.out.println("\nEscolha inválida!");
             }
 
-            if (inimigo.getPontosVida() <= 0) {
-                System.out.println("\n✨════════════════════════════════════════════════════════✨");
-                System.out.println("   🎉 VITÓRIA! Você derrotou " + inimigo.getNome() + "! 🎉");
-                System.out.println("✨════════════════════════════════════════════════════════✨");
+            if (inimigo.pontosVida <= 0) {
+                System.out.println("\n════════════════════════════════════════════════════════");
+                System.out.println("           VITÓRIA! Você derrotou " + inimigo.nome);
+                System.out.println("════════════════════════════════════════════════════════");
                 
                 Item itemDropado = Item.itemAleatorio(random.nextInt(4));
-                System.out.println("\n🎁 Item dropado: " + itemDropado.getNome() + "!");
+                System.out.println("\nItem dropado: " + itemDropado.nome + "!");
                 this.inventario.adicionarItem(itemDropado);
 
                 uparNivel();
@@ -162,7 +189,7 @@ public abstract class Personagem implements Cloneable {
             }
 
             if (this.pontosVida <= 0) {
-                System.out.println("\n💀 " + this.nome + " foi derrotado!");
+                System.out.println("\n" this.nome + " foi derrotado!");
                 break;
             }
         }
@@ -173,37 +200,37 @@ public abstract class Personagem implements Cloneable {
         short inimigoDado = (short) (random.nextInt(6) + 1);
 
         short ataqueJogador = (short) (this.ataque + this.bonusAtaqueTemporario + jogadorDado);
-        short ataqueInimigo = (short) (inimigo.getAtaque() + inimigoDado);
+        short ataqueInimigo = (short) (inimigo.ataque + inimigoDado);
 
-        System.out.println("\n🎲 " + this.nome + " rolou " + jogadorDado + " → Ataque total: " + ataqueJogador);
-        System.out.println("🎲 " + inimigo.getNome() + " rolou " + inimigoDado + " → Ataque total: " + ataqueInimigo);
+        System.out.println("\n" + this.nome + " rolou " + jogadorDado + " → Ataque total: " + ataqueJogador);
+        System.out.println(inimigo.nome + " rolou " + inimigoDado + " → Ataque total: " + ataqueInimigo);
         System.out.println();
 
-        if(ataqueJogador > inimigo.getDefesa()) {
-            short danoJogador = (short) (ataqueJogador - inimigo.getDefesa());
-            inimigo.setPontosVida((short) (inimigo.getPontosVida() - danoJogador));
+        if(ataqueJogador > inimigo.defesa) {
+            short danoJogador = (short) (ataqueJogador - inimigo.defesa);
+            inimigo.setPontosVida((short) (inimigo.pontosVida - danoJogador));
 
-            System.out.println("💥 Você causou " + danoJogador + " de dano!");
-            System.out.println("   " + inimigo.getNome() + " está com " + inimigo.getPontosVida() + " HP");
+            System.out.println("Você deu " + danoJogador + " de dano!");
+            System.out.println(inimigo.nome + " está com " + inimigo.pontosVida + " HP");
         } else {
-            System.out.println("🛡️  " + inimigo.getNome() + " defendeu o ataque!");
+            System.out.println(inimigo.nome + " defendeu o ataque!");
         }
 
         if(ataqueInimigo > this.defesa) {
             short danoInimigo = (short) (ataqueInimigo - (this.defesa + this.bonusDefesaTemporario));
             this.setPontosVida((short) (this.pontosVida - danoInimigo));
 
-            System.out.println("💔 Inimigo causou " + danoInimigo + " de dano!");
-            System.out.println("   Você está com " + this.pontosVida + " HP");
+            System.out.println("Inimigo deu " + danoInimigo + " de dano!");
+            System.out.println("Você está com " + this.pontosVida + " HP");
         } else {
-            System.out.println("🛡️  Você defendeu o ataque!");
+            System.out.println("Você defendeu o ataque!");
         }
 
         if (efeitoAtivo) {
             bonusAtaqueTemporario = 0;
             bonusDefesaTemporario = 0;
             efeitoAtivo = false;
-            System.out.println("\n⏱️  Efeitos temporários expiraram!");
+            System.out.println("\nEfeitos temporários expiraram!");
         }
     }
 
@@ -234,15 +261,15 @@ public abstract class Personagem implements Cloneable {
         boolean usandoItem = this.getInventario().usarItem(nomeItem);
 
         if (usandoItem && itemUsado != null) {
-            System.out.println("\n✓ Você usou " + itemUsado.getNome() + "!");
+            System.out.println("\nVocê usou " + itemUsado.nome + "!");
             aplicarEfeitoTemporario(itemUsado);
         } else {
-            System.out.println("\n❌ Item não encontrado ou sem quantidade!");
+            System.out.println("\nItem não encontrado ou sem quantidade!");
         }
     }
 
     private void aplicarEfeitoTemporario(Item item) {
-        String nomeItem = item.getNome().toLowerCase();
+        String nomeItem = item.nome.toLowerCase();
 
         try {
             switch (nomeItem) {
@@ -251,58 +278,58 @@ public abstract class Personagem implements Cloneable {
                     this.pontosVida += cura;
                     if (this.pontosVida > this.pontosVidaMaximo)
                         this.pontosVida = this.pontosVidaMaximo;
-                    System.out.println("💚 Você recuperou " + cura + " de HP!");
+                    System.out.println("Você recuperou " + cura + " de HP!");
                 }
                 case "poção média de vida" -> {
                     short cura = (short) (this.pontosVidaMaximo * 0.5);
                     this.pontosVida += cura;
                     if (this.pontosVida > this.pontosVidaMaximo)
                         this.pontosVida = this.pontosVidaMaximo;
-                    System.out.println("💚 Você recuperou " + cura + " de HP!");
+                    System.out.println("Você recuperou " + cura + " de HP!");
                 }
                 case "poção grande de vida" -> {
                     short cura = (short) (this.pontosVidaMaximo * 0.75);
                     this.pontosVida += cura;
                     if (this.pontosVida > this.pontosVidaMaximo)
                         this.pontosVida = this.pontosVidaMaximo;
-                    System.out.println("💚 Você recuperou " + cura + " de HP!");
+                    System.out.println("Você recuperou " + cura + " de HP!");
                 }
                 case "elixir dos deuses" -> {
                     this.pontosVida = this.pontosVidaMaximo;
-                    System.out.println("✨ Vida totalmente restaurada!");
+                    System.out.println("Vida totalmente restaurada!");
                 }
                 case "poção de ataque" -> {
                     this.bonusAtaqueTemporario = 5;
                     this.efeitoAtivo = true;
-                    System.out.println("⚔️  Seu ataque aumentou temporariamente!");
+                    System.out.println("Seu ataque aumentou temporariamente!");
                 }
                 case "amuleto raro" -> {
                     this.bonusDefesaTemporario = 3;
                     this.efeitoAtivo = true;
-                    System.out.println("🛡️  Sua defesa aumentou temporariamente!");
+                    System.out.println("Sua defesa aumentou temporariamente!");
                 }
                 case "elixir da fúria" -> {
                     this.bonusAtaqueTemporario = 8;
                     this.efeitoAtivo = true;
-                    System.out.println("😡 Você sente uma fúria incontrolável! Seu ataque explodiu!");
+                    System.out.println("Você sente uma fúria incontrolável! Seu ataque explodiu!");
                 }
                 case "essência do berserker" -> {
                     this.bonusAtaqueTemporario = 6;
                     this.bonusDefesaTemporario = 4;
                     this.efeitoAtivo = true;
-                    System.out.println("⚡ MODO BERSERKER ATIVADO! Ataque e Defesa aumentados!");
+                    System.out.println("MODO BERSERKER ATIVADO! Ataque e Defesa aumentados!");
                 }
                 case "excalibur" -> {
                     this.bonusAtaqueTemporario = 15;
                     this.efeitoAtivo = true;
-                    System.out.println("⚔️  ✨ Poder da Excalibur ativado!");
+                    System.out.println("Poder da Excalibur ativado!");
                 }
                 case "capa da invisibilidade" -> {
                     this.bonusDefesaTemporario = 9999;
                     this.efeitoAtivo = true;
                     System.out.println("Você está coberto pela capa da invisibilidade! desviará garantido do proximo golpe!");
                 }
-                default -> System.out.println("🤷 O item não causou efeito em batalha.");
+                default -> System.out.println("O item não causou efeito em batalha.");
             }
         } catch (Exception e) {
             System.out.println("Erro ao aplicar efeito!");
@@ -310,20 +337,20 @@ public abstract class Personagem implements Cloneable {
     }
 
     private boolean fugir(Random random) {
-        System.out.println("\n🏃 Tentando fugir...");
+        System.out.println("\nTentando fugir...");
         int chance = random.nextInt(100);
         
         if (chance < 50) {
             System.out.println("✓ Você conseguiu fugir!");
             return true;
         } else {
-            System.out.println("❌ Você não conseguiu fugir!");
+            System.out.println("Você não conseguiu fugir!");
             System.out.println("O inimigo aproveita e ataca!");
             
             try {
                 short dano = (short)(this.ataque * 0.3);
                 this.setPontosVida((short)(this.pontosVida - dano));
-                System.out.println("💔 Você sofreu " + dano + " de dano!");
+                System.out.println("Você sofreu " + dano + " de dano!");
             } catch (Exception e) {}
             
             return false;
@@ -332,12 +359,12 @@ public abstract class Personagem implements Cloneable {
 
     private void uparNivel() {
         this.nivel++;
-        System.out.println("\n⬆️  LEVEL UP! Você alcançou o nível " + this.nivel + "!");
+        System.out.println("\nLEVEL UP! Você alcançou o nível " + this.nivel + "!");
 
-        System.out.println("\n📈 Escolha um atributo para aumentar:");
-        System.out.println("  1) ❤️  Vida (+5 HP máximo e cura completa)");
-        System.out.println("  2) ⚔️  Ataque (+2 de ataque)");
-        System.out.println("  3) 🛡️  Defesa (+2 de defesa)");
+        System.out.println("\nEscolha um atributo para aumentar:");
+        System.out.println("  1) Vida (+5 HP máximo e cura completa)");
+        System.out.println("  2) Ataque (+2 de ataque)");
+        System.out.println("  3) Defesa (+2 de defesa)");
         System.out.print("\nEscolha: ");
 
         byte escolha = -1;
@@ -354,20 +381,20 @@ public abstract class Personagem implements Cloneable {
                 case 1 -> {
                     this.pontosVidaMaximo += 5;
                     this.pontosVida = this.pontosVidaMaximo;
-                    System.out.println("\n✓ Vida aumentada e restaurada!");
+                    System.out.println("\nVida aumentada e restaurada!");
                 }
                 case 2 -> {
                     this.ataque += 2;
-                    System.out.println("\n✓ Ataque aumentado!");
+                    System.out.println("\nAtaque aumentado!");
                 }
                 case 3 -> {
                     this.defesa += 2;
-                    System.out.println("\n✓ Defesa aumentada!");
+                    System.out.println("\nDefesa aumentada!");
                 }
                 default -> {
                     this.pontosVidaMaximo += 5;
                     this.pontosVida = this.pontosVidaMaximo;
-                    System.out.println("\n✓ Vida aumentada (padrão)!");
+                    System.out.println("\nVida aumentada (padrão)!");
                 }
             }
         } catch (Exception e) {
@@ -379,9 +406,9 @@ public abstract class Personagem implements Cloneable {
     public String toString() {
         return "╔═══════════════════════════════════════════════════════════════╗\n" +
                "  " + this.nome + " - Nível " + this.nivel + "\n" +
-               "  ❤️  Vida: " + this.pontosVida + "/" + this.pontosVidaMaximo + "\n" +
-               "  ⚔️  Ataque: " + this.ataque + "\n" +
-               "  🛡️  Defesa: " + this.defesa + "\n" +
+               "  Vida: " + this.pontosVida + "/" + this.pontosVidaMaximo + "\n" +
+               "  Ataque: " + this.ataque + "\n" +
+               "  Defesa: " + this.defesa + "\n" +
                "╚═══════════════════════════════════════════════════════════════╝";
     }
 
