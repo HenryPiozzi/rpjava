@@ -1,5 +1,5 @@
 package personagem;
-import ./Inventario;
+import item.Inventario;
 
 public class Guerreiro extends Personagem  implements  Cloneable {
 
