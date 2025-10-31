@@ -1,0 +1,97 @@
+Grupo: Henry Gabriel Piozzi (24002752), Pedro Ximenes Costa (24000763)
+
+- Descrição do projeto:
+
+O projeto consiste em um RPG de texto em Java intitulado “A Lenda dos Cristais Ancestrais”. 
+O jogo permite ao jogador escolher uma classe (Guerreiro, Mago ou Arqueiro), enfrentar inimigos, coletar itens e evoluir de nível conforme as batalhas.
+
+- Como rodar? Vá na pasta do projeto e abra o CMD do projeto. Em seguida use esses comandos:
+
+Compila tudo de uma vez.
+========================
+javac *.java 
+========================
+Executa o jogo
+========================
+java Jogo 
+========================
+
+- Tarefas feitas por cada integrante:
+
+Henry Gabriel Piozzi - 24002752 (Desenvolveu Inimigo, Item, Inventário)
+
+
+
+Pedro Ximenes Costa - 24000763 (Desenvolveu Personagem, Guerreiro, Mago, Arqueiro)
+
+Personagem.java
+Classe base que representa o jogador e inimigos. Contém os atributos nome, pontos de vida, pontos de vida máximo, ataque, defesa, nível e inventário. Também, há os atributos para quando estiver usando a poção: bônus de ataque temporário, bônus de defesa temporário e efeito ativo. 
+Implementa os métodos de ataque, defesa, uso de itens, subida de nível e efeitos temporários.
+
+Construtores:
+Personagem(String nome, short pontosVida, short ataque, short defesa, byte nivel, Inventario inventario) – Inicializa os atributos principais do personagem.
+Personagem(Personagem modelo) – Construtor de cópia que clona outro personagem existente.
+
+Getters e Setters:
+- Métodos de acesso e modificação de atributos (getNome(), setNome(String nome), setPontosVida(short pontosVida), getPontosVida(), setPontosVidaMaximo(short pontosVidaMaximo), getPontosVidaMaximo(), setAtaque(short ataque), getAtaque(), setDefesa(short defesa), getDefesa(), setNivel(byte nível), getNivel(), setInventario(Inventario inventario), getInventario(), getBonusAtaqueTemporario(), setBonusAtaqueTemporario(short bonusAtaqueTemporario), getBonusDefesaTemporario(), setBonusDefesaTempoarario(short bonusDefesaTemporario), isEfeitoAtivo(), setEfeitoAtivo(boolean efeitoAtivo)).
+
+Métodos de combate:
+batalhar(Inimigo inimigo) – Controla toda a lógica de batalha entre o jogador e o inimigo, incluindo turnos e resultados.
+atacar(Inimigo inimigo, Random random) – Realiza os cálculos de ataque e defesa com rolagem de dados e aplica o dano.
+fugir(Random random) – Implementa a tentativa de fuga, com chance de sucesso e dano em caso de falha.
+
+Métodos de itens e efeitos:
+- usarItem() – Exibe o inventário, permite escolher um item e aplica seus efeitos.
+- aplicarEfeitoTemporario(String[] efeitos) – Aplica efeitos específicos dos itens (cura, buffs de ataque ou defesa, etc.).
+
+Método de progressão:
+- uparNivel(byte nivel) – Incrementa o nível do personagem e permite melhorar um atributo (vida, ataque ou defesa).
+
+Outros métodos:
+- toString() – Retorna uma string com as informações completas do personagem.
+- equals(Object obj) – Compara dois personagens para verificar se possuem os mesmos atributos principais (nome, nível, ataque, defesa, etc.).
+- hashCode() – Gera um código numérico único para cada personagem, garantindo consistência com o método equals().
+- clone() – Cria uma cópia completa do personagem, usada no sistema de save point. Na classe personagem é feita em abstract para ser usada em sua subclasses.
+
+Guerreiro.java:
+Subclasse que herda de Personagem. Possui mais vida e defesa, sendo especializada em combates físicos longos. 
+Construtor utiliza super(nome, (short)25, (short)3, (short)5, (byte)1, new Inventario());
+
+Mago.java:
+Subclasse voltada ao ataque mágico. Tem maior ataque, mas vida e defesa menores. 
+Construtor: super(nome, (short)18, (short)6, (short)3, (byte)1, new Inventario());
+
+Arqueiro.java:
+Classe balanceada, com atributos médios de ataque e defesa. 
+Construtor: super(nome, (short)20, (short)4, (short)4, (byte)1, new Inventario());
+
+Todas as subclasses apresentam o método clone.
+
+Responsabilidades e Implementações:
+- Criação da estrutura de classes baseadas em herança e polimorfismo.
+- Implementação dos construtores e da inicialização de atributos.
+- Criação da lógica de batalha com rolagem de dados (Random).
+- Controle do uso de itens e aplicação de efeitos temporários.
+- Implementação de método de clonagem e tratamento de exceções.
+- Integração com o inventário (uso e listagem de itens).
+
+Dificuldades Enfrentadas:
+- Problemas com imports e pacotes Java ao organizar pastas.
+- Adaptação de tipos primitivos para byte e short.
+- Tratamento de exceções em batalhas e cópias de objetos.
+- Garantir o funcionamento correto da lógica de ataque e defesa.
+
+Aprendizados:
+- Compreensão da estrutura de herança e polimorfismo em Java.
+- Uso de classes compostas (Inventário dentro de Personagem).
+- Aplicação prática de encapsulamento e controle de acesso.
+- Melhor entendimento do controle de fluxo e tratamento de erros.
+
+Autoavaliação:
+Consegui implementar e testar as classes principais do sistema com sucesso. 
+O código é funcional e organizado de forma coerente com os conceitos de POO.
+Nota sugerida: 9,5 / 10
+
+Henry Piozzi e Pedro Ximenes (Desenvolveram juntos a classe Jogo)
+
+
