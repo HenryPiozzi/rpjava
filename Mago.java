@@ -1,7 +1,7 @@
 public class Mago extends Personagem implements Cloneable {
 
     public Mago(String nome) throws Exception {
-        super(nome, (short)18, (short)6, (short)3, (byte)1, new Inventario());
+        super(nome, (short)18, (short)7, (short)3, (byte)1, new Inventario());
     }
     // Método clone para a classe Mago
     @Override
