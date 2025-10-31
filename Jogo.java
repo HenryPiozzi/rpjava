@@ -12,6 +12,7 @@ public class Jogo {
     private boolean introducaoMostrada;
     private Personagem savePoint;
 
+    // Construtor
     public Jogo() {
         this.scanner = new Scanner(System.in);
         this.jogoAtivo = true;
@@ -22,6 +23,7 @@ public class Jogo {
         this.introducaoMostrada = false;
     }
 
+    // Método para iniciar o jogo, chamando os outros necessarios
     public void iniciarJogo() {
         mostrarIntroducao();
         escolherClasse();
@@ -29,6 +31,7 @@ public class Jogo {
         loopPrincipal();
     }
 
+    //metodo para iniciar a historia do jogo
     private void mostrarIntroducao() {
         limparTela();
         System.out.println("╔═══════════════════════════════════════════════════════════════╗");
@@ -55,6 +58,7 @@ public class Jogo {
         scanner.nextLine();
     }
 
+    // Método para escolher a classe do personagem e inserir o nome
     private void escolherClasse() {
         limparTela();
         
@@ -124,6 +128,7 @@ public class Jogo {
         pausar();
     }
 
+    //metodo para dar poções ao jogador no inicio do jogo
     private void darItensIniciais() {
         Item pocaoVida = new Item("Pocao de Vida pequena", "Recupera 30% de HP", "Cura", "30", (byte)3);
         jogador.getInventario().adicionarItem(pocaoVida);
@@ -131,6 +136,11 @@ public class Jogo {
         pausar();
     }
 
+    //loop principal do jogo, onde o jogador escolhe 
+    //explorar, podendo encontrar um combate ou armadilha
+    //ver o inventario, onde pode saber os itens que possui
+    //ver o status completo do personagem e hisotira
+    //criar um save point que pode ser retornado futuramente ao escolher carregar save point
     private void loopPrincipal() {
         while (jogoAtivo) {
             limparTela();
@@ -180,6 +190,7 @@ public class Jogo {
         }
     }
 
+    //metodo que direciona o jogador à area que ele escolher
     private void explorar() {
         limparTela();
         System.out.println("╔═══════════════════════════════════════════════════════════════╗");
@@ -219,6 +230,13 @@ public class Jogo {
         }
     }
 
+    //todas os metodos de explorar criam um inimigo aleatorio e chamam a função de batalhar do personagem
+    //verificando se houve uma vitoria ou derrota ao termino dela
+    //e as funções que verificam o progresso de purificação dos cristais
+    //concedem bonus ao jogador dependendo da dificuldade do local
+
+    //metodo para explorar a floresta sombria, 
+    // tendo 70% de chance de encontrar um inimigo e 30% de encontrar um tesouro aleatorio
     private void explorarFlorestaSombria() {
         limparTela();
         System.out.println("FLORESTA SOMBRIA");
@@ -265,6 +283,7 @@ public class Jogo {
         pausar();
     }
 
+    //metodo que verifica se a floresta já foi purificada
     private void verificarProgressoFloresta() {
         if (inimigosDerrotados >= 3 && !cristaisPurificados[0]) {
             System.out.println("\nVOCÊ ENCONTROU O CRISTAL DA NATUREZA!");
@@ -292,11 +311,13 @@ public class Jogo {
                 System.out.println("Sua vida foi restaurada!");
             } catch (Exception e) {}
             
-            verificarVitoria();
+            verificarProgressoGeral();
             pausar();
         }
     }
 
+    //metodo para explorar as cavernas de gelo,
+    // tendo 65% de chance de encontrar um inimigo, 20% de encontrar um tesouro aleatorio e 15% de cair em uma armadilha
     private void explorarCavernasDeGelo() {
         limparTela();
         System.out.println("CAVERNAS DE GELO");
@@ -354,6 +375,7 @@ public class Jogo {
         pausar();
     }
 
+    //metodo que verifica se as cavernas já foram purificadas
     private void verificarProgressoCavernas() {
         if (inimigosDerrotados >= 6 && !cristaisPurificados[1]) {
             System.out.println("\nVOCÊ ENCONTROU O CRISTAL DA ÁGUA!");
@@ -376,11 +398,14 @@ public class Jogo {
                 System.out.println("\nSeu ataque aumentou em 3!");
             } catch (Exception e) {}
             
-            verificarVitoria();
+            verificarProgressoGeral();
             pausar();
         }
     }
 
+    //metodo para explorar a torre carmesim
+    //tendo 75% de chance de encontrar um inimigo mais forte e 
+    //25% de chance de achar um tesouro epico ou lendario
     private void explorarTorreCarmesim() {
         limparTela();
         System.out.println("TORRE CARMESIM");
@@ -451,11 +476,244 @@ public class Jogo {
                 System.out.println("\nSua defesa aumentou em 3!");
             } catch (Exception e) {}
             
-            verificarVitoria();
+            verificarProgressoGeral();
             pausar();
         }
     }
 
+    private void verificarProgressoGeral() {
+        if(cristaisPurificados[0] && cristaisPurificados[1] && cristaisPurificados[2]) {
+            lutaFinal();
+        }
+    }
+
+    private void lutaFinal() {
+        limparTela();
+        System.out.println("╔═══════════════════════════════════════════════════════════════╗");
+        System.out.println("║                    CONFRONTO FINAL                            ║");
+        System.out.println("╚═══════════════════════════════════════════════════════════════╝");
+        System.out.println();
+        System.out.println("Com os três cristais purificados, o poder das sombras enfraquece...");
+        System.out.println();
+        System.out.println("De repente, o céu escurece e uma voz ecoa:");
+        System.out.println();
+        System.out.println("\"Vocês ousam desafiar meu poder? PATÉTICOS!\"");
+        System.out.println();
+        System.out.println("O LORDE DAS SOMBRAS se materializa diante de você!");
+        System.out.println();
+        System.out.print("Pressione ENTER para enfrentar o confronto final...");
+        scanner.nextLine();
+        
+        // Salvar automaticamente antes da luta final
+        try {
+            savePoint = (Personagem) jogador.clone();
+            System.out.println("\n[Sistema] Save automático realizado antes da batalha final!");
+            pausar();
+        } catch (Exception e) {}
+        
+        limparTela();
+        
+        // Criar o Lorde das Sombras - boss final
+        try {
+            Inimigo lordeDasSombras = new Inimigo(
+                "Lorde das Sombras", 
+                (short)(jogador.getPontosVidaMaximo() * 2), // Vida = 2x a do jogador
+                (short)(jogador.getAtaque() + 5),            // Ataque maior
+                (short)(jogador.getDefesa() + 3),            // Defesa maior
+                (byte)10,                                     // Nível 10
+                new Inventario()
+            );
+            
+            System.out.println("╔═══════════════════════════════════════════════════════════════╗");
+            System.out.println("║                        BATALHA FINAL                          ║");
+            System.out.println("╚═══════════════════════════════════════════════════════════════╝");
+            System.out.println();
+            System.out.println("" + jogador.getNome() + " VS LORDE DAS SOMBRAS");
+            System.out.println();
+            System.out.println("\"Vocês são corajosos, mas a escuridão sempre prevalece!\"");
+            System.out.println();
+            pausar();
+            
+            // Fases da batalha
+            boolean faseDoisAtivada = false;
+            boolean faseTresAtivada = false;
+            
+            // Iniciar a batalha
+            Random random = new Random();
+            
+            while (jogador.getPontosVida() > 0 && lordeDasSombras.getPontosVida() > 0) {
+                
+                // Verificar mudanças de fase
+                double vidaPorcentagem = (double)lordeDasSombras.getPontosVida() / lordeDasSombras.getPontosVidaMaximo();
+                
+                if (vidaPorcentagem <= 0.50 && !faseDoisAtivada) {
+                    limparTela();
+                    System.out.println("═══════════════════════════════════════════════════════════════");
+                    System.out.println("           FASE 2: A FÚRIA DAS SOMBRAS!  ");
+                    System.out.println("═══════════════════════════════════════════════════════════════");
+                    System.out.println();
+                    System.out.println("\"VOCÊ VAI PAGAR POR ISSO!\"");
+                    System.out.println();
+                    System.out.println("O Lorde das Sombras se enfurece!");
+                    System.out.println("Seu ataque aumentou drasticamente!");
+                    
+                    try {
+                        lordeDasSombras.setAtaque((short)(lordeDasSombras.getAtaque() + 5));
+                    } catch (Exception e) {}
+                    
+                    faseDoisAtivada = true;
+                    pausar();
+                }
+                
+                if (vidaPorcentagem <= 0.25 && !faseTresAtivada) {
+                    limparTela();
+                    System.out.println("═══════════════════════════════════════════════════════════════");
+                    System.out.println("      FASE 3: DESESPERO DAS TREVAS! ");
+                    System.out.println("═══════════════════════════════════════════════════════════════");
+                    System.out.println();
+                    System.out.println("\"IMPOSSÍVEL! EU SOU ETERNO!\"");
+                    System.out.println();
+                    System.out.println("O Lorde das Sombras invoca um poder proibido!");
+                    System.out.println("Ele se cura parcialmente!");
+                    
+                    try {
+                        lordeDasSombras.setPontosVida((short)(lordeDasSombras.getPontosVida() + 20));
+                        lordeDasSombras.setDefesa((short)(lordeDasSombras.getDefesa() + 3));
+                    } catch (Exception e) {}
+                    
+                    faseTresAtivada = true;
+                    pausar();
+                }
+                
+                // Turno do jogador (usando o sistema de batalha existente)
+                System.out.println("\n┌─────────────────────────────────────────────────────────────┐");
+                System.out.println("│HP " + jogador.getNome() + ": " + jogador.getPontosVida() + "/" + jogador.getPontosVidaMaximo() + 
+                                  " |HP Lorde: " + lordeDasSombras.getPontosVida() + "/" + lordeDasSombras.getPontosVidaMaximo());
+                System.out.println("└─────────────────────────────────────────────────────────────┘");
+                System.out.println();
+                System.out.println("O que deseja fazer?");
+                System.out.println("  1) Atacar");
+                System.out.println("  2) Usar Item");
+                System.out.println("  3) Defender (reduz dano pela metade neste turno)");
+                System.out.print("\nEscolha: ");
+                
+                byte escolha = -1;
+                try {
+                    escolha = scanner.nextByte();
+                    scanner.nextLine();
+                } catch (Exception e) {
+                    scanner.nextLine();
+                    escolha = -1;
+                }
+                
+                boolean defendendo = false;
+                
+                switch(escolha) {
+                    case 1 -> {
+                        // Ataque do jogador
+                        short jogadorDado = (short)(random.nextInt(6) + 1);
+                        short ataqueJogador = (short)(jogador.getAtaque() + jogador.getBonusAtaqueTemporario() + jogadorDado);
+                        
+                        System.out.println("\nVocê rolou " + jogadorDado + " Ataque: " + ataqueJogador);
+                        
+                        if (ataqueJogador > lordeDasSombras.getDefesa()) {
+                            short dano = (short)(ataqueJogador - lordeDasSombras.getDefesa());
+                            lordeDasSombras.setPontosVida((short)(lordeDasSombras.getPontosVida() - dano));
+                            System.out.println(" Você causou " + dano + " de dano!");
+                            System.out.println("Lorde das Sombras: " + lordeDasSombras.getPontosVida() + " HP");
+                        } else {
+                            System.out.println("O Lorde das Sombras bloqueou seu ataque!");
+                        }
+                    }
+                    case 2 -> {
+                        // Usar item (reutilizar lógica existente)
+                        System.out.println();
+                        jogador.getInventario().listarItens();
+                        
+                        if (!jogador.getInventario().getItens().isEmpty()) {
+                            System.out.print("Digite o nome do item: ");
+                            String nomeItem = scanner.nextLine().trim();
+                            
+                            String[] efeitosItem = jogador.getInventario().usarItem(nomeItem);
+                            
+                            if (efeitosItem != null && !efeitosItem[0].isEmpty()) {
+                                // Aplicar efeito (simplificado)
+                                if (efeitosItem[0].equalsIgnoreCase("cura")) {
+                                    short cura = (short)(jogador.getPontosVidaMaximo() * (Short.parseShort(efeitosItem[1])/100.0));
+                                    jogador.setPontosVida((short)Math.min(jogador.getPontosVida() + cura, jogador.getPontosVidaMaximo()));
+                                    System.out.println("Você recuperou " + cura + " HP!");
+                                }
+                            }
+                        }
+                    }
+                    case 3 -> {
+                        System.out.println("\n Você assume posição defensiva!");
+                        defendendo = true;
+                    }
+                    default -> System.out.println("\nAção inválida!");
+                }
+                
+                // Verificar se o Lorde foi derrotado
+                if (lordeDasSombras.getPontosVida() <= 0) {
+                    break;
+                }
+                
+                // Turno do Lorde das Sombras
+                System.out.println("\nTurno do Lorde das Sombras...");
+                short inimigoDado = (short)(random.nextInt(6) + 1);
+                short ataqueInimigo = (short)(lordeDasSombras.getAtaque() + inimigoDado);
+                
+                System.out.println("Lorde rolou " + inimigoDado + " → Ataque: " + ataqueInimigo);
+                
+                if (ataqueInimigo > jogador.getDefesa()) {
+                    short dano = (short)(ataqueInimigo - (jogador.getDefesa() + jogador.getBonusDefesaTemporario()));
+                    
+                    if (defendendo) {
+                        dano /= 2;
+                        System.out.println("Você bloqueou parte do dano!");
+                    }
+                    
+                    jogador.setPontosVida((short)(jogador.getPontosVida() - dano));
+                    System.out.println("Você sofreu " + dano + " de dano!");
+                    System.out.println("Você: " + jogador.getPontosVida() + " HP");
+                } else {
+                    System.out.println("Você defendeu o ataque!");
+                }
+                
+                pausar();
+            }
+            
+            // Verificar resultado
+            if (jogador.getPontosVida() > 0) {
+                // VITÓRIA!
+                vitoriasobre FinalBoss();
+            } else {
+                // Derrota
+                limparTela();
+                System.out.println("═══════════════════════════════════════════════════════════════");
+                System.out.println("\"PATÉTICO! A ESCURIDÃO SEMPRE VENCE!\"");
+                System.out.println("═══════════════════════════════════════════════════════════════");
+                gameOver();
+            }
+            
+        } catch (Exception e) {
+            System.out.println("Erro durante a batalha final: " + e.getMessage());
+        }
+    }
+
+    private void vitoriaFinalBoss() {
+        limparTela();
+        System.out.println("O Lorde das Sombras cai de joelhos...");
+        System.out.println();
+        System.out.println("\"Não... IMPOSSÍVEL! EU SOU... ETERNO...\"");
+        System.out.println();
+        System.out.println("Com um último grito, ele se dissolve em fumaça negra.");
+        System.out.println();
+        pausar();
+        verificarVitoria(); // Mostra a tela final de vitória
+    }
+
+    //verifica se o jogador purificou os tres cristais e exibe a mensagem de vitoria
     private void verificarVitoria() {
         if (cristaisPurificados[0] && cristaisPurificados[1] && cristaisPurificados[2]) {
             limparTela();
