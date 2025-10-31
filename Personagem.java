@@ -128,7 +128,7 @@ public abstract class Personagem implements Cloneable {
     }
 
     // Método batalhar a qual aparece o as opções do que o usuário pode fazer, atacar, usar item e fugir.
-    public void batalhar(Inimigo inimigo) throws Exception {
+    public void batalhar(Inimigo inimigo, boolean batalhaFinal) throws Exception {
         Random random = new Random();
 
         System.out.println("\n╔═══════════════════════════════════════════════════════════════╗");
@@ -169,6 +169,10 @@ public abstract class Personagem implements Cloneable {
                     usarItem();
                 }
                 case 3 -> {
+                    if (batalhaFinal) {
+                        System.out.println("\nVocê não pode fugir da batalha final!");
+                        break;
+                    }
                     if (fugir(random)) {
                         return;
                     }
