@@ -87,11 +87,11 @@ public class Jogo {
         System.out.println();
         System.out.println("2 - MAGO");
         System.out.println("    Mestre das artes arcanas, causa grande dano mágico.");
-        System.out.println("    + Alto ataque mágico (18 HP, 6 ATK, 3 DEF)");
+        System.out.println("    + Alto ataque mágico (18 HP, 7 ATK, 3 DEF)");
         System.out.println();
         System.out.println("3 - ARQUEIRO");
         System.out.println("    Ágil e preciso, ataca à distância com maestria.");
-        System.out.println("    + Balanceado e versátil (20 HP, 4 ATK, 4 DEF)");
+        System.out.println("    + Balanceado e versátil (20 HP, 5 ATK, 4 DEF)");
         System.out.println();
         System.out.print("Escolha sua classe (1-3): ");
         
