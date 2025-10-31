@@ -11,6 +11,7 @@ Compila tudo de uma vez.
 ========================
 javac *.java 
 ========================
+
 Executa o jogo
 ========================
 java Jogo 
@@ -29,13 +30,11 @@ Classe que repsenta o Inventario possuído pelo personagem, com um único atribu
 Inimigo.java
 Uma classe que não adiciona nenhum atributo à classe Personagem, mas que tem uma função static que retorna um inimigo aleatório, ela recebe o capitulo atual do personagem na historia, aumentando a força de acordo com o capitulo, com próprio construtor
 
-
-
-
 Pedro Ximenes Costa - 24000763 (Desenvolveu Personagem, Guerreiro, Mago, Arqueiro)
 
 Personagem.java
-Classe base que representa o jogador e inimigos. Contém os atributos nome, pontos de vida, pontos de vida máximo, ataque, defesa, nível e inventário. Também, há os atributos para quando estiver usando a poção: bônus de ataque temporário, bônus de defesa temporário e efeito ativo. 
+Classe base que representa o jogador e inimigos. Contém os atributos nome, pontos de vida, pontos de vida máximo, ataque, defesa,
+nível e inventário. Também, há os atributos para quando estiver usando a poção: bônus de ataque temporário, bônus de defesa temporário e efeito ativo.
 Implementa os métodos de ataque, defesa, uso de itens, subida de nível e efeitos temporários.
 
 Construtores:
@@ -43,7 +42,9 @@ Personagem(String nome, short pontosVida, short ataque, short defesa, byte nivel
 Personagem(Personagem modelo) – Construtor de cópia que clona outro personagem existente.
 
 Getters e Setters:
-- Métodos de acesso e modificação de atributos (getNome(), setNome(String nome), setPontosVida(short pontosVida), getPontosVida(), setPontosVidaMaximo(short pontosVidaMaximo), getPontosVidaMaximo(), setAtaque(short ataque), getAtaque(), setDefesa(short defesa), getDefesa(), setNivel(byte nível), getNivel(), setInventario(Inventario inventario), getInventario(), getBonusAtaqueTemporario(), setBonusAtaqueTemporario(short bonusAtaqueTemporario), getBonusDefesaTemporario(), setBonusDefesaTempoarario(short bonusDefesaTemporario), isEfeitoAtivo(), setEfeitoAtivo(boolean efeitoAtivo)).
+- Métodos de acesso e modificação de atributos (getNome(), setNome(String nome), setPontosVida(short pontosVida), getPontosVida(), setPontosVidaMaximo(short pontosVidaMaximo), getPontosVidaMaximo(),
+setAtaque(short ataque), getAtaque(), setDefesa(short defesa), getDefesa(), setNivel(byte nível), getNivel(), setInventario(Inventario inventario), getInventario(), getBonusAtaqueTemporario(),
+setBonusAtaqueTemporario(short bonusAtaqueTemporario), getBonusDefesaTemporario(), setBonusDefesaTempoarario(short bonusDefesaTemporario), isEfeitoAtivo(), setEfeitoAtivo(boolean efeitoAtivo)).
 
 Métodos de combate:
 batalhar(Inimigo inimigo) – Controla toda a lógica de batalha entre o jogador e o inimigo, incluindo turnos e resultados.
@@ -77,31 +78,55 @@ Construtor: super(nome, (short)20, (short)4, (short)4, (byte)1, new Inventario()
 
 Todas as subclasses apresentam o método clone.
 
-Responsabilidades e Implementações:
-- Criação da estrutura de classes baseadas em herança e polimorfismo.
-- Implementação dos construtores e da inicialização de atributos.
-- Criação da lógica de batalha com rolagem de dados (Random).
-- Controle do uso de itens e aplicação de efeitos temporários.
-- Implementação de método de clonagem e tratamento de exceções.
-- Integração com o inventário (uso e listagem de itens).
-
-Dificuldades Enfrentadas:
-- Problemas com imports e pacotes Java ao organizar pastas.
-- Adaptação de tipos primitivos para byte e short.
-- Tratamento de exceções em batalhas e cópias de objetos.
-- Garantir o funcionamento correto da lógica de ataque e defesa.
-
-Aprendizados:
-- Compreensão da estrutura de herança e polimorfismo em Java.
-- Uso de classes compostas (Inventário dentro de Personagem).
-- Aplicação prática de encapsulamento e controle de acesso.
-- Melhor entendimento do controle de fluxo e tratamento de erros.
-
 Autoavaliação:
-Consegui implementar e testar as classes principais do sistema com sucesso. 
-O código é funcional e organizado de forma coerente com os conceitos de POO.
-Nota sugerida: 9,5 / 10
+Consegui implementar e testar as classes principais do sistema. Tive um melhor entendimento do controle de fluxo.
+Apresentei dificuldades em tratamento de exceções em batalhas e cópias de objetos e também garantir o funcionamento correto da lógica de ataque e defesa.
+Nota sugerida: 10 / 10
 
 Henry Piozzi e Pedro Ximenes (Desenvolveram juntos a classe Jogo)
+
+Jogo.java
+
+Construtor:
+Jogo() – Inicializa todos os componentes do jogo, como o scanner, jogo ativo, o gerador de números aleatórios (Random), o estado do jogo (jogoAtivo), o capítulo atual, o contador de inimigos derrotados, os cristais purificados, save point e introdução mostrada
+
+Métodos principais de controle do jogo:
+- iniciarJogo() – Inicia a execução do jogo, chamando a introdução, a escolha da classe do personagem, a entrega dos itens iniciais e o loop principal.
+- loopPrincipal() – Mostra o menu principal, que redireciona para as ações escolhidas (explorar, inventário, status, criar save point, carregar save point e sair do jogo).
+- encerrarJogo() – Encerra o jogo exibindo uma mensagem.
+
+Métodos de introdução e seleção:
+- mostrarIntroducao() – Exibe o enredo inicial do jogo e apresenta a história do jogo.
+- escolherClasse() – Permite ao jogador escolher entre Guerreiro, Mago ou Arqueiro, instanciando o personagem conforme a escolha.
+- darItensIniciais() – Entrega poções de vida ao jogador logo após a escolha da classe.
+
+Métodos de exploração:
+- explorar() – Mostra as regiões disponíveis para explorar e direciona o jogador para a área escolhida.
+- explorarFlorestaSombria() – Gerencia os eventos da floresta (combate, tesouro ou cristal).
+- explorarCavernasDeGelo() – Gerencia os eventos das cavernas (combate, armadilhas ou cristal).
+- explorarTorreCarmesim() – Gerencia os eventos da torre (inimigos fortes e itens raros).
+- descansarNaVila() – Permite ao jogador recuperar completamente a vida e descansar entre as missões.
+
+Métodos de progresso e vitória:
+- verificarProgressoFloresta() – Controla o progresso da purificação do Cristal da Natureza.
+- verificarProgressoCavernas() – Controla o progresso da purificação do Cristal da Água.
+- verificarProgressoTorre() – Controla o progresso da purificação do Cristal do Fogo.
+- verificarVitoria() – Verifica se os três cristais foram purificados e exibe a tela de vitória com estatísticas finais.
+
+Métodos de gerenciamento de save:
+- criarSavePoint() – Cria uma cópia do personagem (clone) e salva seu progresso.
+-carregarSavePoint() – Restaura o progresso do jogador a partir do save point anterior.
+
+Métodos de interface e exibição:
+- mostrarStatusRapido() – Exibe um resumo com o status básico do jogador (nível, HP e cristais).
+- exibirStatus() – Mostra o status completo do personagem e o progresso dos cristais.
+- limparTela() – Simula a limpeza da tela no terminal.
+pausar() – Pausa a execução até o jogador pressionar ENTER.
+
+Método de fim de jogo:
+- gameOver() – Mostra a tela de derrota e pergunta se o jogador deseja carregar o último save point.
+
+Método main:
+- Inicializa a classe e inicia o Jogo.
 
 
