@@ -588,9 +588,9 @@ public class Jogo {
             System.out.println();
             System.out.println("═══════════════════════════════════════════════════════════════");
             System.out.println("ESTATÍSTICAS FINAIS:");
-            System.out.println("  • Inimigos derrotados: " + inimigosDerrotados);
-            System.out.println("  • Nível alcançado: " + jogador.getNivel());
-            System.out.println("  • Capítulos completados: " + capituloAtual);
+            System.out.println("  Inimigos derrotados: " + inimigosDerrotados);
+            System.out.println("  Nível alcançado: " + jogador.getNivel());
+            System.out.println("  Capítulos completados: " + capituloAtual);
             System.out.println("═══════════════════════════════════════════════════════════════");
             System.out.println();
             System.out.println("Obrigado por jogar A LENDA DOS CRISTAIS ANCESTRAIS!");
@@ -687,8 +687,8 @@ public class Jogo {
         System.out.println("  Cristal da Água: " + (cristaisPurificados[1] ? " PURIFICADO" : " CORROMPIDO"));
         System.out.println("  Cristal do Fogo: " + (cristaisPurificados[2] ? " PURIFICADO" : " CORROMPIDO"));
         System.out.println("----------------------------------------------------------------------");
-        System.out.println("  • Inimigos derrotados: " + inimigosDerrotados);
-        System.out.println("  • Capítulo atual: " + capituloAtual);
+        System.out.println("  Inimigos derrotados: " + inimigosDerrotados);
+        System.out.println("  Capítulo atual: " + capituloAtual);
     }
 
     private void mostrarStatusRapido() {
