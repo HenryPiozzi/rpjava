@@ -687,7 +687,7 @@ public class Jogo {
             if (jogador.getPontosVida() > 0) {
                 // VITÓRIA!
                 vitoriasobreFinalBoss();
-            } else 
+            } else {
                 // Derrota
                 limparTela();
                 System.out.println("═══════════════════════════════════════════════════════════════");
@@ -695,8 +695,7 @@ public class Jogo {
                 System.out.println("═══════════════════════════════════════════════════════════════");
                 gameOver();
             }
-            
-        } catch (Exception e) {
+        }catch (Exception e) {
             System.out.println("Erro durante a batalha final: " + e.getMessage());
         }
     }
