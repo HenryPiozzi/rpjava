@@ -57,21 +57,37 @@ public class Jogo {
 
     private void escolherClasse() {
         limparTela();
+        
+        System.out.println("╔═══════════════════════════════════════════════════════════════╗");
+        System.out.println("║                   BEM-VINDO, AVENTUREIRO!                     ║");
+        System.out.println("╚═══════════════════════════════════════════════════════════════╝");
+        System.out.println();
+        System.out.print("Digite o nome do seu personagem: ");
+        String nomePersonagem = scanner.nextLine().trim();
+        
+        while (nomePersonagem.isEmpty()) {
+            System.out.print("Nome inválido! Digite um nome válido: ");
+            nomePersonagem = scanner.nextLine().trim();
+        }
+        
+        limparTela();
         System.out.println("╔═══════════════════════════════════════════════════════════════╗");
         System.out.println("║                    ESCOLHA SUA CLASSE                         ║");
         System.out.println("╚═══════════════════════════════════════════════════════════════╝");
         System.out.println();
+        System.out.println("Olá, " + nomePersonagem + "! Escolha sua classe:");
+        System.out.println();
         System.out.println("1 - GUERREIRO");
         System.out.println("    Forte e resistente, especialista em combate corpo a corpo.");
-        System.out.println("    + Alta defesa e vida");
+        System.out.println("    + Alta defesa e vida (25 HP, 3 ATK, 5 DEF)");
         System.out.println();
         System.out.println("2 - MAGO");
         System.out.println("    Mestre das artes arcanas, causa grande dano mágico.");
-        System.out.println("    + Alto ataque mágico");
+        System.out.println("    + Alto ataque mágico (18 HP, 6 ATK, 3 DEF)");
         System.out.println();
         System.out.println("3 - ARQUEIRO");
         System.out.println("    Ágil e preciso, ataca à distância com maestria.");
-        System.out.println("    + Balanceado e versátil");
+        System.out.println("    + Balanceado e versátil (20 HP, 4 ATK, 4 DEF)");
         System.out.println();
         System.out.print("Escolha sua classe (1-3): ");
         
@@ -83,16 +99,16 @@ public class Jogo {
                 
                 switch (opcao) {
                     case 1 -> {
-                        jogador = new Guerreiro("Guerreiro");
-                        System.out.println("\nVocê escolheu o caminho do Guerreiro!");
+                        jogador = new Guerreiro(nomePersonagem);
+                        System.out.println("\n" + nomePersonagem + ", você escolheu o caminho do Guerreiro!");
                     }
                     case 2 -> {
-                        jogador = new Mago("Mago");
-                        System.out.println("\nVocê escolheu o caminho do Mago!");
+                        jogador = new Mago(nomePersonagem); 
+                        System.out.println("\n" + nomePersonagem + ", você escolheu o caminho do Mago!");
                     }
                     case 3 -> {
-                        jogador = new Arqueiro("Arqueiro");
-                        System.out.println("\nVocê escolheu o caminho do Arqueiro!");
+                        jogador = new Arqueiro(nomePersonagem); 
+                        System.out.println("\n" + nomePersonagem + ", você escolheu o caminho do Arqueiro!");
                     }
                     default -> {
                         System.out.print("Opção inválida! Escolha 1, 2 ou 3: ");
