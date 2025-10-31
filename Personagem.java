@@ -186,12 +186,12 @@ public abstract class Personagem implements Cloneable {
                 System.out.println("\nItem dropado: " + itemDropado.getNome() + "!");
                 this.inventario.adicionarItem(itemDropado);
 
-                uparNivel();
-
                 // Se o jogador tiver um nível menor que o inimigo e derrotalo, ele upa.
                 if (this.nivel <= inimigo.getNivel()) {
                     uparNivel();
                 }
+
+                uparNivel();
 
                 break;
             }
