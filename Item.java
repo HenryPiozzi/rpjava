@@ -16,7 +16,7 @@ public class Item implements Comparable<Item> {
     private static final Item[] ITEM_RARO = {
         new Item("Pocao Media de Vida", "Recupera 50% de HP", "Cura", "50", (byte) 1),
         new Item("Amuleto Raro", "Aumenta a defesa em 3", "Defesa bônus", "3", (byte) 1),
-        new Item("Elixir da Furia", "Aumenta drasticamente o ataque no próximo turno", "Dano bônus", "8", (byte) 1)
+        new Item("Elixir da Furia", "Aumenta em 8 o ataque no próximo turno", "Dano bônus", "8", (byte) 1)
     };
 
     private static final Item[] ITEM_EPICO = {
