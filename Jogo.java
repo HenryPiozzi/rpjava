@@ -504,14 +504,7 @@ public class Jogo {
         System.out.println();
         System.out.print("Pressione ENTER para enfrentar o confronto final...");
         scanner.nextLine();
-        
-        // Salvar automaticamente antes da luta final
-        try {
-            savePoint = (Personagem) jogador.clone();
-            System.out.println("\n[Sistema] Save automático realizado antes da batalha final!");
-            pausar();
-        } catch (Exception e) {}
-        
+
         limparTela();
         
         // Criar o Lorde das Sombras - boss final
