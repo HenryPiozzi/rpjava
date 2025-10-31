@@ -18,6 +18,7 @@ public class Inventario {
         }
     }
 
+    // Método para adicionar item ao inventário (verifica se o item já existe e incrementa a quantidade)
     public void adicionarItem(Item item) {
         for (Item i : itens) {
             if (i.getNome().equals(item.getNome())) {
@@ -28,6 +29,7 @@ public class Inventario {
         itens.add(item);
     }
 
+    // Método para usar um item do inventário, que verifica se ele existe e se há quantidade suficiente
     public String[] usarItem(String nome) {
         for (int idx = 0; idx < itens.size(); idx++) {
             Item i = itens.get(idx);
@@ -44,6 +46,7 @@ public class Inventario {
         return new String[]{"", "0"};
     }
 
+    // Método para listar os itens do inventário de forma formatada
     public void listarItens() {
         if (itens.isEmpty()) {
             System.out.println("Seu inventário está vazio.");
@@ -64,6 +67,7 @@ public class Inventario {
         return this.itens;
     }
 
+    //clone, equals e hashCode
     @Override
     public Inventario clone() {
         Inventario clone = new Inventario();

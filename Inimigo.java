@@ -6,6 +6,7 @@ public class Inimigo extends Personagem implements Cloneable {
         super(nome, pontosVida, ataque, defesa, nivel, inventario);
     }
 
+    // Método estático para gerar um inimigo aleatório baseado no capítulo atual
     public static Inimigo gerarInimigo(int capituloAtual) {
         String[] nomesBase = {"Goblin", "Orc", "Esqueleto", "Lobo", "Bandido", "Mago Negro", "Troll", "Zumbi"};
 

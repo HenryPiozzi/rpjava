@@ -7,6 +7,7 @@ public class Item implements Comparable<Item> {
     private String potencia;
     private byte quantidade;
 
+    //criação de variaveis estáticas para a geração de itens aleatorios no jogo
     private static final Item[] ITEM_COMUM = {
         new Item("Pocao de Vida pequena", "Recupera 30% de HP", "Cura", "30", (byte) 1),
         new Item("Pocao de Ataque", "Causa X de dano a mais no proximo ataque", "Dano bônus", "5", (byte) 1),
@@ -29,6 +30,7 @@ public class Item implements Comparable<Item> {
         new Item("Capa da Invisibilidade", "Não recebe o próximo ataque", "Defesa bônus", "999", (byte) 1)
     };
 
+    // Método estático para gerar um item aleatório com base no nível fornecido
     public static Item itemAleatorio(int nivelDoItem) {
         switch (nivelDoItem) {
             case 0:
@@ -44,6 +46,7 @@ public class Item implements Comparable<Item> {
         }
     }
 
+    // Construtor padrão
     public Item(String nome, String descricao, String efeito, String potencia, byte quantidade) {
         this.nome = nome;
         this.descricao = descricao;
@@ -61,6 +64,7 @@ public class Item implements Comparable<Item> {
         this.quantidade = modelo.quantidade;
     }
 
+    // Getters e Setters
     public String getNome() {
         return this.nome;
     }
@@ -105,12 +109,14 @@ public class Item implements Comparable<Item> {
         }
     }
 
+    // Método para adicionar quantidade ao item
     public void adicionarQuantidade(byte valor) {
         if (valor > 0) {
             this.quantidade += valor;
         }
     }
 
+    // Método para usar o item, retornando o efeito e a potência do mesmo e decrementando a quantidade se a quantidade for maior que zero 
     public String[] usar() {
         if (this.quantidade > 0) {
             this.quantidade--;
@@ -119,6 +125,7 @@ public class Item implements Comparable<Item> {
         return new String[]{"", "0"};
     }
 
+    //toString, equals, hashCode e compareTo
     @Override
     public String toString() {
         return "Item{" +
