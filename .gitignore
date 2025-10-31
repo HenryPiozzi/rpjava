@@ -1,0 +1,10 @@
+#Arquivos ignorados
+Arqueiro.class
+Guerreiro.class
+Inimigo.class
+Inventario.class
+Item.class
+Jogo.class
+Mago.class
+Personagem.class
+.idea

@@ -5,7 +5,7 @@ public abstract class Personagem implements Cloneable {
 
     protected String nome;
     protected short pontosVida, pontosVidaMaximo, ataque, defesa, bonusAtaqueTemporario, bonusDefesaTemporario;
-    protected boolean efeitoAtivo;
+    protected boolean efeitoAtivo; // Atributo para saber quando está usando o efeito do item ou não
     protected byte nivel;
     protected Inventario inventario;
 
@@ -20,11 +20,14 @@ public abstract class Personagem implements Cloneable {
         this.nivel = nivel;
         this.inventario = new Inventario(inventario);
 
+        // Atributos para informar quando o usuário está usando um efeito de uma poção ou não. Começa como false pois apenas vira true
+        // Quando usar um item.
         this.bonusAtaqueTemporario = 0;
         this.bonusDefesaTemporario = 0;
         this.efeitoAtivo = false;
     }
 
+    // Setters e getters
     public void setNome(String nome) throws Exception {
         if (nome == null)
             throw new Exception("Nome inválido");
@@ -124,6 +127,7 @@ public abstract class Personagem implements Cloneable {
         this.efeitoAtivo = efeitoAtivo;
     }
 
+    // Método batalhar a qual aparece o as opções do que o usuário pode fazer, atacar, usar item e fugir.
     public void batalhar(Inimigo inimigo) throws Exception {
         Random random = new Random();
 
@@ -135,6 +139,7 @@ public abstract class Personagem implements Cloneable {
         System.out.println("----------------------------------------------------------------------");
         System.out.println();
 
+        // Enquanto a vida do jogador e inimigo estiver maior que zero, a batalha vai ocorrer.
         while(this.pontosVida > 0 && inimigo.getPontosVida() > 0) {
             System.out.println("\n┌─────────────────────────────────────────────────────────────┐");
             System.out.println("│ HP Jogador: " + this.pontosVida + "/" + this.pontosVidaMaximo + 
@@ -170,24 +175,27 @@ public abstract class Personagem implements Cloneable {
                 }
                 default -> System.out.println("\nEscolha inválida!");
             }
+            // Exibe a mensagem que você derrotou um inimigo, ganha um item dropado e upa de nível.
             if (inimigo.getPontosVida() <= 0) {
                 System.out.println("\n════════════════════════════════════════════════════════");
                 System.out.println("           VITÓRIA! Você derrotou " + inimigo.getNome());
                 System.out.println("════════════════════════════════════════════════════════");
-                
+
+                // Pega um item aleatório, informa o jogador e coloca no inventário
                 Item itemDropado = Item.itemAleatorio(random.nextInt(4));
                 System.out.println("\nItem dropado: " + itemDropado.getNome() + "!");
                 this.inventario.adicionarItem(itemDropado);
 
                 uparNivel();
 
+                // Se o jogador tiver um nível menor que o inimigo e derrotalo, ele upa.
                 if (this.nivel < inimigo.getNivel()) {
                     uparNivel();
                 }
 
                 break;
             }
-
+            // Se a vida do jogador for menor ou igual a zero, ele é derrotado.
             if (this.pontosVida <= 0) {
                 System.out.println("\n"+ this.nome + " foi derrotado!");
                 break;
@@ -195,10 +203,14 @@ public abstract class Personagem implements Cloneable {
         }
     }
 
+    // Método private que apenas pode ser acessado atravéz do método batalahar, joga os dados aleatóriamente via Random e soma
+    // do jogador e inimigo.
     private void atacar(Inimigo inimigo, Random random) throws Exception {
+        // Pega valores aleatórios de um D6
         short jogadorDado = (short) (random.nextInt(6) + 1);
         short inimigoDado = (short) (random.nextInt(6) + 1);
 
+        // Gera o ataque e defesa do jogador e o ataque do inimigo.
         short ataqueJogador = (short) (this.ataque + this.bonusAtaqueTemporario + jogadorDado);
         short defesaJogador = (short) (this.defesa + this.bonusDefesaTemporario);
         short ataqueInimigo = (short) (inimigo.getAtaque() + inimigoDado);
@@ -207,6 +219,7 @@ public abstract class Personagem implements Cloneable {
         System.out.println(inimigo.getNome() + " rolou " + inimigoDado + " Ataque total: " + ataqueInimigo);
         System.out.println();
 
+        // Quando o ataque do jogador está maior que a defesa
         if(ataqueJogador > inimigo.getDefesa()) {
             short danoJogador = (short) (ataqueJogador - inimigo.getDefesa());
             inimigo.setPontosVida((short) (inimigo.getPontosVida() - danoJogador));
@@ -217,6 +230,7 @@ public abstract class Personagem implements Cloneable {
             System.out.println(inimigo.getNome() + " defendeu o ataque!");
         }
 
+        // Quando o ataque do inimigo está maior que a defesa do jogador
         if(ataqueInimigo > defesaJogador) {
             short danoInimigo = (short) (ataqueInimigo - (defesaJogador));
             this.setPontosVida((short) (this.pontosVida - danoInimigo));
@@ -227,6 +241,7 @@ public abstract class Personagem implements Cloneable {
             System.out.println("Você defendeu o ataque!");
         }
 
+        // Quando nenhum item está sendo usado, o efeitoAtivo fica false. Quando o jogador selecionar um item, fica true.
         if (efeitoAtivo) {
             bonusAtaqueTemporario = 0;
             bonusDefesaTemporario = 0;
@@ -235,6 +250,8 @@ public abstract class Personagem implements Cloneable {
         }
     }
 
+    // Método private que apenas pode ser acessado atravéz do método batalhar, ele pega os itens do inventário e faz aparecer para o
+    // jogador, precisando escrever o nome do item para ser usado.
     private void usarItem() {
         System.out.println();
         this.getInventario().listarItens();
@@ -251,10 +268,13 @@ public abstract class Personagem implements Cloneable {
             return;
         }
 
+        // Aplica o efeito do item.
         aplicarEfeitoTemporario(inventario.usarItem(nomeItem));
         return;
     }
 
+    // Método private que apenas pode ser acessado atravéz do método batalhar e do método usar item, ele aplica o efeito da poção selecionada
+    // pelo jogador. Apresenta casos de cura, dano, defesa e duplo (ataque e defesa) e ativa o efeito.
     private void aplicarEfeitoTemporario(String[] efeitos) {
         switch (efeitos[0].toLowerCase()) {
             case "cura" -> {
@@ -284,6 +304,8 @@ public abstract class Personagem implements Cloneable {
         }
     }
 
+    // Método private que apenas pode ser acessado atravéz do método batalhar, o jogador tem uma chance de fugir, se ele não conseguir fugir,
+    // o inimigo dará o dano como punição.
     private boolean fugir(Random random) {
         System.out.println("\nTentando fugir...");
         int chance = random.nextInt(100);
@@ -305,6 +327,8 @@ public abstract class Personagem implements Cloneable {
         }
     }
 
+    // Método private que apenas pode ser acessado atravéz do método batalhar, quando o jogador mata um inimigo, ele vai ir para essa tela
+    // para selecionar qual atributo ele quer melhorar.
     private void uparNivel() {
         this.nivel++;
         System.out.println("\nLEVEL UP! Você alcançou o nível " + this.nivel + "!");
@@ -350,6 +374,7 @@ public abstract class Personagem implements Cloneable {
         }
     }
 
+    // toString onde aparece os status do jogador.
     @Override
     public String toString() {
         return "╔═══════════════════════════════════════════════════════════════╗\n" +
@@ -360,6 +385,7 @@ public abstract class Personagem implements Cloneable {
                "╚═══════════════════════════════════════════════════════════════╝";
     }
 
+    // Equals para a comparação das classes.
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -382,6 +408,7 @@ public abstract class Personagem implements Cloneable {
         return true;
     }
 
+    // hashCode
     @Override
     public int hashCode() {
         int ret = 666;
@@ -402,6 +429,7 @@ public abstract class Personagem implements Cloneable {
         return ret;
     }
 
+    // Cópia do personagem, usado para o save point.
     public Personagem(Personagem modelo) throws Exception {
         if (modelo == null)
             throw new Exception("Modelo de personagem inexistente");
