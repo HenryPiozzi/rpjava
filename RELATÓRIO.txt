@@ -20,6 +20,16 @@ java Jogo
 
 Henry Gabriel Piozzi - 24002752 (Desenvolveu Inimigo, Item, Inventário)
 
+Item.java
+Classe que representa os itens usados no jogo, contendo atributo de nome, descrição, efeito, potencia e quantidade, na própria classe tem a criação de variáveis estáticas que server para a geração de itens aleatórios pela função itemAleatorio, a classe Item tem o equals, hashcode, to string e comparable próprios, a função usar que retorna o tipo de efeito e a potencia dele, adicionar quantidade, que pega um item já na classe Inventario do Personagem e adicionar a quantidade daquele item que ele recebeu, o getters, setters construtor e construtor de copiar foram feitos
+
+Inventario.java
+Classe que repsenta o Inventario possuído pelo personagem, com um único atributo que é uma lista de itens, ele tem um construtor, um get dos itens. um listarItens, equals e hashCode, um construtor de copia e as funções listarItens, que mostra todos os Itens presentes no Inventario, adicionarItem, que adiciona um Item no Inventario e a função de usarItem que verifica se o item está presente no inventario e chama a função de usar dele, retornando o que vier dela
+
+Inimigo.java
+Uma classe que não adiciona nenhum atributo à classe Personagem, mas que tem uma função static que retorna um inimigo aleatório, ela recebe o capitulo atual do personagem na historia, aumentando a força de acordo com o capitulo, com próprio construtor
+
+
 
 
 Pedro Ximenes Costa - 24000763 (Desenvolveu Personagem, Guerreiro, Mago, Arqueiro)
