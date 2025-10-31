@@ -686,8 +686,8 @@ public class Jogo {
             // Verificar resultado
             if (jogador.getPontosVida() > 0) {
                 // VITÓRIA!
-                vitoriasobre FinalBoss();
-            } else {
+                vitoriasobreFinalBoss();
+            } else 
                 // Derrota
                 limparTela();
                 System.out.println("═══════════════════════════════════════════════════════════════");
