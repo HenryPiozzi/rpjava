@@ -10,7 +10,7 @@ public class Item implements Comparable<Item> {
     //criação de variaveis estáticas para a geração de itens aleatorios no jogo
     private static final Item[] ITEM_COMUM = {
         new Item("Pocao de Vida pequena", "Recupera 30% de HP", "Cura", "30", (byte) 1),
-        new Item("Pocao de Ataque", "Causa X de dano a mais no pr5ximo ataque", "Dano bônus", "5", (byte) 1),
+        new Item("Pocao de Ataque", "Causa 5 de dano a mais no proximo ataque", "Dano bônus", "5", (byte) 1),
     };
 
     private static final Item[] ITEM_RARO = {
