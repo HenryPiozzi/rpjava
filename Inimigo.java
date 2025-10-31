@@ -7,7 +7,7 @@ public class Inimigo extends Personagem implements Cloneable {
     }
 
     // Método estático para gerar um inimigo aleatório baseado no capítulo atual
-    public static Inimigo gerarInimigo(int capituloAtual, byte inimigosDerrotados) {
+    public static Inimigo gerarInimigo(int capituloAtual, int inimigosDerrotados) {
         String[] nomesBase = {"Goblin", "Orc", "Esqueleto", "Lobo", "Bandido", "Mago Negro", "Troll", "Zumbi"};
 
         String nome = nomesBase[ThreadLocalRandom.current().nextInt(nomesBase.length)];
@@ -19,7 +19,7 @@ public class Inimigo extends Personagem implements Cloneable {
         int pontosVida = vidaBase + (capituloAtual * ThreadLocalRandom.current().nextInt(5, 15));
         int ataque = ataqueBase + (capituloAtual * ThreadLocalRandom.current().nextInt(1, 4));
         int defesa = defesaBase + (capituloAtual * ThreadLocalRandom.current().nextInt(1, 3));
-        byte nivel = inimigosDerrotados;
+        byte nivel = (byte)inimigosDerrotados;
 
         try {
             return new Inimigo(nome, (short)pontosVida, (short)ataque, (short)defesa, nivel, new Inventario());

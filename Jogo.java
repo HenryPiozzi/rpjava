@@ -259,7 +259,7 @@ public class Jogo {
         int evento = dado.nextInt(100);
         
         if (evento < 70) { // 70% chance de combate
-            Inimigo inimigo = Inimigo.gerarInimigo(inimigosDerrotados);
+            Inimigo inimigo = Inimigo.gerarInimigo(capituloAtual, inimigosDerrotados);
             System.out.println("Um " + inimigo.getNome() + " aparece do nada!");
             pausar();
             try {
@@ -339,7 +339,7 @@ public class Jogo {
         int evento = dado.nextInt(100);
         
         if (evento < 65) { // 65% chance de combate
-            Inimigo inimigo = Inimigo.gerarInimigo(inimigosDerrotados);
+            Inimigo inimigo = Inimigo.gerarInimigo(capituloAtual,inimigosDerrotados);
             System.out.println("Um " + inimigo.getNome() + " congelado ataca!");
             pausar();
             
@@ -427,7 +427,7 @@ public class Jogo {
         int evento = dado.nextInt(100);
         
         if (evento < 75) { // 75% chance de combate difícil
-            Inimigo inimigo = Inimigo.gerarInimigo(inimigosDerrotados + 1); // Inimigos mais fortes
+            Inimigo inimigo = Inimigo.gerarInimigo(capituloAtual ,inimigosDerrotados + 1); // Inimigos mais fortes
             System.out.println("Um " + inimigo.getNome() + " flamejante surge!");
             pausar();
             
