@@ -539,7 +539,7 @@ public class Jogo {
             jogador.batalhar(lordeDasSombras);
             
             // Verificar resultado
-            if (jogador.getPontosVida() > 0) {
+            if (jogador.getPontosVida() < 0) {
                 // Derrota
                 limparTela();
                 System.out.println("═══════════════════════════════════════════════════════════════");

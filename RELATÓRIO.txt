@@ -127,9 +127,12 @@ Métodos de progresso e vitória:
 - verificarProgressoCavernas() – Controla o progresso da purificação do Cristal da Água.
 - verificarProgressoTorre() – Controla o progresso da purificação do Cristal do Fogo.
 - verificarVitoria() – Verifica se os três cristais foram purificados e exibe a tela de vitória com estatísticas finais.
+- verificarProgressoGeral() - Verifica se todos os cristais estão purificados para ir para a luta final.
+- lutaFinal() - Após purificar os 3 cristais, o método é chamado aparecendo o boss final, faz um salvamento e vai para o método batalhar.
+- vitoriaFinalBoss() - Mostra a mensagem quando é derrotado o Boss final.
 
 Métodos de gerenciamento de save:
-- criarSavePoint() – Cria uma cópia do personagem (clone) e salva seu progresso.
+- criarSavePoint() – Cria uma cópia do personagem (clone) e salva o seu progresso.
 -carregarSavePoint() – Restaura o progresso do jogador a partir do save point anterior.
 
 Métodos de interface e exibição:
