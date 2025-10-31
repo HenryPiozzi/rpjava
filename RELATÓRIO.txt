@@ -5,7 +5,7 @@ Grupo: Henry Gabriel Piozzi (24002752), Pedro Ximenes Costa (24000763)
 O projeto consiste em um RPG de texto em Java intitulado “A Lenda dos Cristais Ancestrais”. 
 O jogo permite ao jogador escolher uma classe (Guerreiro, Mago ou Arqueiro), enfrentar inimigos, coletar itens e evoluir de nível conforme as batalhas.
 
-- Como rodar? Vá na pasta do projeto e abra o CMD do projeto. Em seguida use esses comandos:
+- Como rodar? Vá à pasta do projeto e abra o CMD do projeto. Em seguida use esses comandos:
 
 Compila tudo de uma vez.
 ========================
@@ -47,7 +47,7 @@ Uma classe que não adiciona nenhum atributo à classe Personagem, mas que tem u
 Pedro Ximenes Costa - 24000763 (Desenvolveu Personagem, Guerreiro, Mago, Arqueiro)
 
 Personagem.java
-Classe base que representa o jogador e inimigos. Contém os atributos nome, pontos de vida, pontos de vida máximo, ataque, defesa,
+Classe que representa o jogador e inimigos. Contém os atributos nome, pontos de vida, pontos de vida máximo, ataque, defesa,
 nível e inventário. Também, há os atributos para quando estiver usando a poção: bônus de ataque temporário, bônus de defesa temporário e efeito ativo.
 Implementa os métodos de ataque, defesa, uso de itens, subida de nível e efeitos temporários.
 
@@ -79,15 +79,15 @@ Outros métodos:
 - clone() – Cria uma cópia completa do personagem, usada no sistema de save point. Na classe personagem é feita em abstract para ser usada em sua subclasses.
 
 Guerreiro.java:
-Subclasse que herda de Personagem. Possui mais vida e defesa, sendo especializada em combates físicos longos. 
+Subclasse que herda de Personagem. Possui mais vida e defesa.
 Construtor utiliza super(nome, (short)25, (short)3, (short)5, (byte)1, new Inventario());
 
 Mago.java:
-Subclasse voltada ao ataque mágico. Tem maior ataque, mas vida e defesa menores. 
+Subclasse que herda de Personagem. Tem maior ataque, mas vida e defesa menores.
 Construtor: super(nome, (short)18, (short)6, (short)3, (byte)1, new Inventario());
 
 Arqueiro.java:
-Classe balanceada, com atributos médios de ataque e defesa. 
+Subclasse que herda de Personagem. Classe balanceada, com atributos médios de ataque e defesa.
 Construtor: super(nome, (short)20, (short)4, (short)4, (byte)1, new Inventario());
 
 Todas as subclasses apresentam o método clone.
@@ -100,6 +100,7 @@ Nota sugerida: 10 / 10
 Henry Piozzi e Pedro Ximenes (Desenvolveram juntos a classe Jogo)
 
 Jogo.java
+Classe que representa a mecânica principal, consegue explorar os locais, exibir os status do jogador, criar um save point e carregá-lo e sair do jogo.
 
 Construtor:
 Jogo() – Inicializa todos os componentes do jogo, como o scanner, jogo ativo, o gerador de números aleatórios (Random), o estado do jogo (jogoAtivo), o capítulo atual, o contador de inimigos derrotados, os cristais purificados, save point e introdução mostrada
