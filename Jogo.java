@@ -263,7 +263,7 @@ public class Jogo {
             System.out.println("Um " + inimigo.getNome() + " aparece do nada!");
             pausar();
             try {
-                jogador.batalhar(inimigo);
+                jogador.batalhar(inimigo, false);
                 
                 if (jogador.getPontosVida() > 0 && inimigo.getPontosVida() <= 0) {
                     inimigosDerrotados++;
@@ -344,7 +344,7 @@ public class Jogo {
             pausar();
             
             try {
-                jogador.batalhar(inimigo);
+                jogador.batalhar(inimigo, false);
                 
                 if (jogador.getPontosVida() > 0 && inimigo.getPontosVida() <= 0) {
                     inimigosDerrotados++;
@@ -432,7 +432,7 @@ public class Jogo {
             pausar();
             
             try {
-                jogador.batalhar(inimigo);
+                jogador.batalhar(inimigo, false);
                 
                 if (jogador.getPontosVida() > 0 && inimigo.getPontosVida() <= 0) {
                     inimigosDerrotados++;
@@ -529,7 +529,7 @@ public class Jogo {
             pausar();
             
             // Fases da batalha
-            jogador.batalhar(lordeDasSombras);
+            jogador.batalhar(lordeDasSombras, true);
             
             // Verificar resultado
             if (jogador.getPontosVida() < 0) {
