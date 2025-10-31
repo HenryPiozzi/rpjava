@@ -189,7 +189,7 @@ public abstract class Personagem implements Cloneable {
                 uparNivel();
 
                 // Se o jogador tiver um nível menor que o inimigo e derrotalo, ele upa.
-                if (this.nivel < inimigo.getNivel()) {
+                if (this.nivel <= inimigo.getNivel()) {
                     uparNivel();
                 }
 
