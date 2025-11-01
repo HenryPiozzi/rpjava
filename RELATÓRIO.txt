@@ -95,7 +95,7 @@ Todas as subclasses apresentam o método clone.
 Autoavaliação:
 Consegui implementar e testar as classes principais do sistema. Tive um melhor entendimento do controle de fluxo.
 Apresentei dificuldades em tratamento de exceções em batalhas e cópias de objetos e também garantir o funcionamento correto da lógica de ataque e defesa.
-Nota sugerida: 10 / 10
+Nota sugerida: 09 / 10
 
 Henry Piozzi e Pedro Ximenes (Desenvolveram juntos a classe Jogo)
 
